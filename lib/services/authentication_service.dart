@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:laradart/ui/views/home/home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:observable_ish/observable_ish.dart';
@@ -47,6 +48,12 @@ class AuthenticationService with ReactiveServiceMixin {
     if (prefs.containsKey(_authTokenName)) {
       String token = prefs.getString(_authTokenName);
       _token.value = token;
+
+      token.isNotEmpty
+          ? _navigationService.pushNamedAndRemoveUntil(Routes.homeView)
+          : _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
+    } else {
+      _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
     }
   }
 
@@ -67,7 +74,7 @@ class AuthenticationService with ReactiveServiceMixin {
       AuthenticationResponse data =
           AuthenticationResponse.fromJson(response.data);
       _token.value = data.accessToken;
-
+      setToken(data.accessToken);
       showSuccessSnackbar(
         message: "You have logged in",
         icon: Icons.check_circle_outline,
@@ -97,7 +104,7 @@ class AuthenticationService with ReactiveServiceMixin {
       AuthenticationResponse data =
           AuthenticationResponse.fromJson(response.data);
       _token.value = data.accessToken;
-
+      setToken(data.accessToken);
       showSuccessSnackbar(
         message: "You have logged in",
         icon: Icons.check_circle_outline,
