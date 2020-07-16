@@ -16,9 +16,11 @@ class HomeViewModel extends ReactiveViewModel {
 
   bool get loggedIn => _authService.loggedIn;
 
-  setToken() {
-    _authService.setToken('Bearer');
+  initialize() {
+    print('init');
   }
+
+  setToken() {}
 
   navigateToLogin() {
     _navigationService.navigateTo(Routes.loginView);

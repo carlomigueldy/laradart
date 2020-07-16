@@ -51,6 +51,9 @@ dependencies:
 
   # user interface
   responsive_builder: ^0.2.0+2
+  google_fonts: ^1.1.0
+  flutter_form_builder: ^3.11.4
+  flutter_svg: ^0.18.0
 
 dev_dependencies:
   flutter_test:
