@@ -34,6 +34,8 @@ class AuthenticationService with ReactiveServiceMixin {
   RxValue<User> _user = RxValue<User>(initial: User());
   User get user => _user.value;
 
+  static const _authTokenName = 'auth.token';
+
   /// Initialize the authentication service to check if user contains token.
   /// And if user contains token from [SharedPreferences] then we set [_token]
   /// to the token that was stored locally.
@@ -42,8 +44,8 @@ class AuthenticationService with ReactiveServiceMixin {
   void initialize() async {
     final SharedPreferences prefs = await _prefs;
 
-    if (prefs.containsKey('auth.token')) {
-      String token = prefs.getString('auth.token');
+    if (prefs.containsKey(_authTokenName)) {
+      String token = prefs.getString(_authTokenName);
       _token.value = token;
     }
   }
@@ -116,7 +118,7 @@ class AuthenticationService with ReactiveServiceMixin {
   void setToken(String token) async {
     final SharedPreferences prefs = await _prefs;
     _token.value = token;
-    prefs.setString('auth.token', token);
+    prefs.setString(_authTokenName, token);
   }
 
   /// Destroy the auth token from state and in [SharedPreferences]
@@ -125,7 +127,7 @@ class AuthenticationService with ReactiveServiceMixin {
   void deleteToken() async {
     final SharedPreferences prefs = await _prefs;
     _token.value = "";
-    prefs.remove('auth.token');
+    prefs.remove(_authTokenName);
   }
 
   /// A callback function receiving [DioError] as first parameter
