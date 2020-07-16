@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laradart/services/authentication_service.dart';
+import 'package:laradart/services/theme_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:laradart/app/locator.dart';
 import 'package:laradart/app/routes.gr.dart';
@@ -10,11 +11,16 @@ class HomeViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
+  final _themeService = locator<ThemeService>();
 
   @override
-  List<ReactiveServiceMixin> get reactiveServices => [_authService];
+  List<ReactiveServiceMixin> get reactiveServices => [
+        _authService,
+        _themeService,
+      ];
 
   bool get loggedIn => _authService.loggedIn;
+  bool get isDark => _themeService.isDark;
 
   initialize() {
     print('init');
@@ -38,5 +44,9 @@ class HomeViewModel extends ReactiveViewModel {
       duration: const Duration(seconds: 2),
       isDismissible: true,
     );
+  }
+
+  toggleTheme() {
+    _themeService.toggleTheme();
   }
 }

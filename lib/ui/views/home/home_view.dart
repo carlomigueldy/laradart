@@ -30,30 +30,33 @@ class _HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Container(
-          height: 300,
-          color: Colors.blue,
-          child: Column(
-            children: [
-              Text(model.loggedIn ? 'logged in' : 'not logged in'),
-              RaisedButton(
-                child: Text('set token'),
-                onPressed: () => model.setToken(),
-              ),
-              FlatButton(
-                child: Text('go login'),
-                onPressed: () => model.navigateToLogin(),
-              ),
-              FlatButton(
-                child: Text('snackbar'),
-                onPressed: () => model.showSnackbar(),
-              )
-            ],
+    return Container(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(model.loggedIn ? 'You are logged in' : 'You are not logged in'),
+          Text(model.isDark ? 'Theme is dark' : 'Theme is light'),
+          RaisedButton(
+            child: Text('Set Token'),
+            onPressed: () => model.setToken(),
           ),
-        ),
-      ],
+          RaisedButton(
+            child: Text('Navigate to Login View'),
+            onPressed: () => model.navigateToLogin(),
+          ),
+          RaisedButton(
+            child: Text('Display Snackbar'),
+            onPressed: () => model.showSnackbar(),
+          ),
+          RaisedButton(
+            child: Text('Toggle Theme'),
+            onPressed: () => model.toggleTheme(),
+          ),
+        ],
+      ),
     );
   }
 }

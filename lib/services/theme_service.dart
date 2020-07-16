@@ -19,6 +19,9 @@ class ThemeService with ReactiveServiceMixin {
   ///
   /// @return void
   void toggleTheme() {
+    print('[Theme Service] called toggleTheme()');
+    print(
+        '[Theme Service] the current theme is ' + (isDark ? 'dark' : 'light'));
     if (_theme.value == ThemeMode.light) {
       _theme.value = ThemeMode.dark;
     } else {
@@ -60,7 +63,7 @@ class ThemeService with ReactiveServiceMixin {
     );
   }
 
-  /// Here we define our theme colors for dark mode
+  /// Here we define our theme colors for light theme
   ThemeData get lightTheme {
     return ThemeData(
       primaryColor: Colors.indigo[400],
