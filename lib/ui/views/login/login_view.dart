@@ -19,7 +19,7 @@ class LoginView extends StatelessWidget {
                 color: Colors.blue,
                 child: Column(
                   children: [
-                    Text(model.token),
+                    Text(model.loggedIn ? 'logged in' : 'not authenticated'),
                     RaisedButton(
                       child: Text('delete token'),
                       onPressed: () => model.deleteToken(),

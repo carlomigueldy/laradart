@@ -12,6 +12,7 @@ class LoginViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices => [_authService];
 
   String get token => _authService.token;
+  bool get loggedIn => _authService.loggedIn;
 
   login() {
     _authService.loginWithEmail(

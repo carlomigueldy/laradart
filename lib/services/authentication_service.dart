@@ -60,11 +60,10 @@ class AuthenticationService with ReactiveServiceMixin {
 
       AuthenticationResponse data =
           AuthenticationResponse.fromJson(response.data);
-      // _token.value = data.accessToken;
-      print(data.accessToken);
+      _token.value = data.accessToken;
 
       _snackbarService.showSnackbar(message: "You have logged in!");
-      _navigationService.navigateTo(Routes.homeView);
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
 
       return response;
     } on DioError catch (e) {

@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
                 color: Colors.blue,
                 child: Column(
                   children: [
-                    Text(model.token),
+                    Text(model.loggedIn ? 'logged in' : 'not logged in'),
                     RaisedButton(
                       child: Text('set token'),
                       onPressed: () => model.setToken(),

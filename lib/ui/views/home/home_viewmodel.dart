@@ -11,7 +11,7 @@ class HomeViewModel extends ReactiveViewModel {
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_authService];
 
-  String get token => _authService.token;
+  bool get loggedIn => _authService.loggedIn;
 
   setToken() {
     _authService.setToken('Bearer');
