@@ -1,25 +1,20 @@
-import 'package:dio/dio.dart';
-import 'package:injectable/injectable.dart';
-import 'package:laradart/datamodels/auth_response.dart';
-import 'package:observable_ish/observable_ish.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stacked/stacked.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:observable_ish/observable_ish.dart';
+import 'package:injectable/injectable.dart';
+import 'package:stacked/stacked.dart';
+import 'package:dio/dio.dart';
 
 import '../app/config.dart';
+import '../datamodels/auth_response.dart';
 import '../datamodels/user.dart';
 import '../app/routes.gr.dart';
 import '../app/locator.dart';
 
 @lazySingleton
 class AuthenticationService with ReactiveServiceMixin {
-  /// Here are all the reactive values inside the service
-  RxValue<String> _token = RxValue<String>(initial: "");
-  String get token => _token.value;
-  bool get loggedIn => _token.value.isNotEmpty ? true : false;
-  RxValue<User> _user = RxValue<User>(initial: User());
-  User get user => _user.value;
-
   /// Here we instantiate all the services and
   /// other classes that this [AuthenticationService] requires.
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -29,6 +24,15 @@ class AuthenticationService with ReactiveServiceMixin {
   AuthenticationService() {
     listenToReactiveValues([_token]);
   }
+
+  /// @return [String] token
+  RxValue<String> _token = RxValue<String>(initial: "");
+  String get token => _token.value;
+  bool get loggedIn => _token.value.isNotEmpty ? true : false;
+
+  /// @return [User] user
+  RxValue<User> _user = RxValue<User>(initial: User());
+  User get user => _user.value;
 
   /// Initialize the authentication service to check if user contains token.
   /// And if user contains token from [SharedPreferences] then we set [_token]
@@ -62,7 +66,10 @@ class AuthenticationService with ReactiveServiceMixin {
           AuthenticationResponse.fromJson(response.data);
       _token.value = data.accessToken;
 
-      _snackbarService.showSnackbar(message: "You have logged in!");
+      showSuccessSnackbar(
+        message: "You have logged in",
+        icon: Icons.check_circle_outline,
+      );
       _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
 
       return response;
@@ -76,7 +83,27 @@ class AuthenticationService with ReactiveServiceMixin {
   /// @param [UsernameCredential] credentials A map containing email and password
   /// @return void
   Future loginWithUsername(UsernameCredential credentials) async {
-    try {} on DioError catch (e) {
+    try {
+      Response response = await dio.post(
+        '/api/auth/login',
+        data: {
+          "username": credentials.username,
+          "password": credentials.password,
+        },
+      );
+
+      AuthenticationResponse data =
+          AuthenticationResponse.fromJson(response.data);
+      _token.value = data.accessToken;
+
+      showSuccessSnackbar(
+        message: "You have logged in",
+        icon: Icons.check_circle_outline,
+      );
+      _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+
+      return response;
+    } on DioError catch (e) {
       handleError(e);
     }
   }
@@ -111,32 +138,94 @@ class AuthenticationService with ReactiveServiceMixin {
 
     switch (error.response.statusCode) {
       case 403:
-        _snackbarService.showSnackbar(
-            message:
-                "You do not have the right privileges to access this resource.");
+        showErrorSnackbar(
+          icon: Icons.error_outline,
+          message:
+              "You do not have the right privileges to access this resource.",
+        );
         _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
         break;
       case 422:
-        _snackbarService.showSnackbar(
-            message:
-                "Your credentials are wrong. Please try again using the correct credentials.");
+        showErrorSnackbar(
+          icon: Icons.error_outline,
+          message:
+              "Your credentials are wrong. Please try again using the correct credentials.",
+        );
         break;
       case 401:
-        _snackbarService.showSnackbar(message: "You are not logged in.");
+        showErrorSnackbar(
+          icon: Icons.error_outline,
+          message: "Incorrect credentials.",
+        );
         _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
         break;
       case 404:
-        _snackbarService.showSnackbar(message: "Request not found.");
+        showErrorSnackbar(
+          icon: Icons.error_outline,
+          message: "Request not found.",
+        );
         break;
       case 500:
-        _snackbarService.showSnackbar(
-            message:
-                "There is something wrong with our servers, please report to the admin so it gets fixed.");
+        showErrorSnackbar(
+          icon: Icons.error_outline,
+          message:
+              "There is something wrong with our servers, please report to the admin so it gets fixed.",
+        );
         break;
       default:
-        _snackbarService.showSnackbar(
-            message: "An error has occurred anonymously.");
+        showErrorSnackbar(
+          icon: Icons.error_outline,
+          message: "An error has occurred anonymously.",
+        );
     }
+  }
+
+  /// Show error [Snackbar]
+  ///
+  /// @param [String] message
+  /// @param [IconData] icon
+  /// @return void
+  void showErrorSnackbar({@required String message, IconData icon}) {
+    _snackbarService.showCustomSnackBar(
+      message: message,
+      borderRadius: 15,
+      icon: Icon(
+        icon,
+        color: Colors.red,
+      ),
+      margin: EdgeInsets.all(15),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      shouldIconPulse: false,
+      snackStyle: SnackStyle.FLOATING,
+      snackPosition: SnackPosition.BOTTOM,
+      dismissDirection: SnackDismissDirection.HORIZONTAL,
+      duration: const Duration(seconds: 2),
+      isDismissible: true,
+    );
+  }
+
+  /// Show error [Snackbar]
+  ///
+  /// @param [String] message
+  /// @param [IconData] icon
+  /// @return void
+  void showSuccessSnackbar({@required String message, IconData icon}) {
+    _snackbarService.showCustomSnackBar(
+      message: message,
+      borderRadius: 15,
+      icon: Icon(
+        icon,
+        color: Colors.green,
+      ),
+      margin: EdgeInsets.all(15),
+      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      shouldIconPulse: false,
+      snackStyle: SnackStyle.FLOATING,
+      snackPosition: SnackPosition.BOTTOM,
+      dismissDirection: SnackDismissDirection.HORIZONTAL,
+      duration: const Duration(seconds: 2),
+      isDismissible: true,
+    );
   }
 }
 

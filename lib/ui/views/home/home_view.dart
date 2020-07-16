@@ -27,6 +27,10 @@ class HomeView extends StatelessWidget {
                     FlatButton(
                       child: Text('go login'),
                       onPressed: () => model.navigateToLogin(),
+                    ),
+                    FlatButton(
+                      child: Text('snackbar'),
+                      onPressed: () => model.showSnackbar(),
                     )
                   ],
                 ),
