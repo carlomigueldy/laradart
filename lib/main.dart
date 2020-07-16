@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/app/routes.gr.dart';
-import 'package:laradart/ui/views/home/home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
+import './app/locator.dart';
+import './app/routes.gr.dart';
+import './services/theme_service.dart';
 
 void main() {
   setupLocator();
@@ -15,9 +15,13 @@ class LaraDartApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'LaraDart Starter',
+      themeMode: locator<ThemeService>().theme,
+      theme: locator<ThemeService>().isDark
+          ? locator<ThemeService>().darkTheme
+          : locator<ThemeService>().lightTheme,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: Router().onGenerateRoute,
-      home: HomeView(),
+      initialRoute: Routes.splashView,
     );
   }
 }
