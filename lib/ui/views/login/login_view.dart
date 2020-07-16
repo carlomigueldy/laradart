@@ -24,6 +24,10 @@ class LoginView extends StatelessWidget {
                       child: Text('delete token'),
                       onPressed: () => model.deleteToken(),
                     ),
+                    RaisedButton(
+                      onPressed: () => model.login(),
+                      child: Text('Login!'),
+                    )
                   ],
                 ),
               ),

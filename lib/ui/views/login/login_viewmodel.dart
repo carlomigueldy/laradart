@@ -13,6 +13,15 @@ class LoginViewModel extends ReactiveViewModel {
 
   String get token => _authService.token;
 
+  login() {
+    _authService.loginWithEmail(
+      EmailCredential(
+        email: "admin@admin.com",
+        password: "password",
+      ),
+    );
+  }
+
   deleteToken() {
     _authService.deleteToken();
   }

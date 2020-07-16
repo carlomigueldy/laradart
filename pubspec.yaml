@@ -33,6 +33,7 @@ dependencies:
   dio: ^3.0.9
   json_serializable: ^3.3.0
   json_annotation: ^3.0.1
+  shared_preferences: ^0.5.8
   
   # state
   stacked: ^1.7.3+2
@@ -46,7 +47,9 @@ dependencies:
   injectable:
   observable_ish:
   get_it: ^4.0.2
-  
+
+  # user interface
+  responsive_builder: ^0.2.0+2
 
 dev_dependencies:
   flutter_test:
