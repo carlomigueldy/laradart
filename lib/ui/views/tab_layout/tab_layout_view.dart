@@ -1,7 +1,9 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:laradart/ui/views/tab_layout/tab_layout_viewmodel.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/home/home_view.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/search/search_view.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/settings/settings_view.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
@@ -15,7 +17,23 @@ class TabLayoutView extends StatelessWidget {
         return ScreenTypeLayout(
           mobile: SafeArea(
             child: Scaffold(
-              body: getViewForIndex(model.currentIndex),
+              body: PageTransitionSwitcher(
+                duration: const Duration(milliseconds: 300),
+                reverse: model.reverse,
+                transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                ) {
+                  return SharedAxisTransition(
+                    child: child,
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: SharedAxisTransitionType.horizontal,
+                  );
+                },
+                child: getViewForIndex(model.currentIndex),
+              ),
               bottomNavigationBar: BottomNavigationBar(
                 iconSize: 32,
                 type: BottomNavigationBarType.fixed,
@@ -26,6 +44,10 @@ class TabLayoutView extends StatelessWidget {
                 items: [
                   BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.home),
+                    title: SizedBox.shrink(),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.search),
                     title: SizedBox.shrink(),
                   ),
                   BottomNavigationBarItem(
@@ -50,6 +72,8 @@ class TabLayoutView extends StatelessWidget {
       case 0:
         return HomeView();
       case 1:
+        return SearchView();
+      case 2:
         return SettingsView();
       default:
         return HomeView();

@@ -54,6 +54,7 @@ dependencies:
   google_fonts: ^1.1.0
   flutter_form_builder: ^3.11.4
   flutter_svg: ^0.18.0
+  animations: ^1.1.1
 
 dev_dependencies:
   flutter_test:

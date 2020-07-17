@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laradart/app/locator.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 import '../settings/settings_viewmodel.dart';
@@ -7,7 +8,9 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SettingsViewModel>.reactive(
-      viewModelBuilder: () => SettingsViewModel(),
+      viewModelBuilder: () => locator<SettingsViewModel>(),
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
       builder: (context, model, child) {
         return SafeArea(
           child: model.user != null

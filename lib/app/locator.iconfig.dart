@@ -9,6 +9,8 @@ import 'package:laradart/services/authentication_service.dart';
 import 'package:laradart/services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/home/home_viewmodel.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/search/search_viewmodel.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/settings/settings_viewmodel.dart';
 import 'package:laradart/services/theme_service.dart';
 import 'package:get_it/get_it.dart';
 
@@ -26,6 +28,8 @@ void $initGetIt(GetIt g, {String environment}) {
 
   //Eager singletons must be registered in the right order
   g.registerSingleton<HomeViewModel>(HomeViewModel());
+  g.registerSingleton<SearchViewModel>(SearchViewModel());
+  g.registerSingleton<SettingsViewModel>(SettingsViewModel());
 }
 
 class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {

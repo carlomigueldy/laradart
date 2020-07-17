@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/ui/views/tab_layout/tabs/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-class HomeView extends StatelessWidget {
+import '../../../../../app/locator.dart';
+import './search_viewmodel.dart';
+
+class SearchView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<HomeViewModel>.reactive(
-      viewModelBuilder: () => locator<HomeViewModel>(),
+    return ViewModelBuilder<SearchViewModel>.reactive(
+      viewModelBuilder: () => locator<SearchViewModel>(),
       initialiseSpecialViewModelsOnce: true,
       disposeViewModel: false,
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
-        return _HomeViewBody(model: model);
+        return _SearchViewBody(model: model);
       },
     );
   }
 }
 
-class _HomeViewBody extends StatelessWidget {
-  final HomeViewModel model;
+class _SearchViewBody extends StatelessWidget {
+  final SearchViewModel model;
 
-  const _HomeViewBody({Key key, this.model}) : super(key: key);
+  const _SearchViewBody({Key key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,18 +39,6 @@ class _HomeViewBody extends StatelessWidget {
             width: 150,
           ),
           Text("Hello welcome back, " + model.userFullName),
-          Text(model.loggedIn ? 'You are logged in' : 'You are not logged in'),
-          Text(model.isDark ? 'Theme is dark' : 'Theme is light'),
-          RaisedButton(
-            child: Text('Set Token'),
-            onPressed: () => model.setToken(),
-            elevation: 0,
-          ),
-          RaisedButton(
-            child: Text('Navigate to Login View'),
-            onPressed: () => model.navigateToLogin(),
-            elevation: 0,
-          ),
           RaisedButton(
             child: Text('Display Snackbar'),
             onPressed: () => model.showSnackbar(),

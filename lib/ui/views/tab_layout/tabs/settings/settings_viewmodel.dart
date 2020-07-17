@@ -1,8 +1,10 @@
+import 'package:injectable/injectable.dart';
 import 'package:laradart/datamodels/user.dart';
 import 'package:laradart/services/authentication_service.dart';
 import 'package:laradart/app/locator.dart';
 import 'package:stacked/stacked.dart';
 
+@singleton
 class SettingsViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
 
