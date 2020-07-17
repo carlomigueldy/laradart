@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:laradart/ui/views/tab_layout/tab_layout_viewmodel.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/home/home_view.dart';
@@ -16,6 +17,7 @@ class TabLayoutView extends StatelessWidget {
             child: Scaffold(
               body: getViewForIndex(model.currentIndex),
               bottomNavigationBar: BottomNavigationBar(
+                iconSize: 32,
                 type: BottomNavigationBarType.fixed,
                 currentIndex: model.currentIndex,
                 onTap: (int value) {
@@ -23,7 +25,7 @@ class TabLayoutView extends StatelessWidget {
                 },
                 items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
+                    icon: Icon(CupertinoIcons.home),
                     title: SizedBox.shrink(),
                   ),
                   BottomNavigationBarItem(

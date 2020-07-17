@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/ui/views/tab_layout/tabs/settings/settings_viewmodel.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
+import '../settings/settings_viewmodel.dart';
 
 class SettingsView extends StatelessWidget {
   @override
@@ -42,8 +42,9 @@ class _MobileScreen extends StatelessWidget {
     return ListView(
       children: [
         _PageHeader(model: model),
-        SizedBox(height: 30),
+        SizedBox(height: 5),
         _UserAvatar(model: model),
+        SizedBox(height: 10),
         listHeader(
           label: 'Profile',
           context: context,
@@ -132,9 +133,9 @@ class _UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
-      width: 200,
-      margin: EdgeInsets.symmetric(horizontal: 100),
+      height: 250,
+      width: 100,
+      margin: EdgeInsets.symmetric(horizontal: 50),
       decoration: BoxDecoration(
         color: Colors.blue,
         shape: BoxShape.circle,

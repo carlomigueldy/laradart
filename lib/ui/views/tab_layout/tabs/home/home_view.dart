@@ -33,7 +33,7 @@ class _HomeViewBody extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Image.asset(
-            '/icons/icon-tile.png',
+            'assets/icons/icon-tile.png',
             height: 150,
             width: 150,
           ),

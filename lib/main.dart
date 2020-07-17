@@ -5,6 +5,7 @@ import './app/routes.gr.dart';
 import './services/theme_service.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(LaraDartApp());
 }
