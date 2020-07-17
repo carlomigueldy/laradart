@@ -14,9 +14,6 @@ class TabLayoutView extends StatelessWidget {
         return ScreenTypeLayout(
           mobile: SafeArea(
             child: Scaffold(
-              appBar: AppBar(
-                title: Text('Home'),
-              ),
               body: getViewForIndex(model.currentIndex),
               bottomNavigationBar: BottomNavigationBar(
                 type: BottomNavigationBarType.fixed,
@@ -31,7 +28,7 @@ class TabLayoutView extends StatelessWidget {
                   ),
                   BottomNavigationBarItem(
                     icon: CircleAvatar(
-                      backgroundImage: model.user.avatar != null
+                      backgroundImage: model.user != null
                           ? NetworkImage(model.user.avatar)
                           : AssetImage('icons/icon-tile.png'),
                     ),

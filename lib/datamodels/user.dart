@@ -9,11 +9,11 @@ part 'user.g.dart';
 class User {
   final int id;
   final String avatar;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String fullName;
-  final String email;
+  String firstName;
+  String middleName = "";
+  String lastName;
+  String fullName;
+  String email;
 
   User({
     this.id,

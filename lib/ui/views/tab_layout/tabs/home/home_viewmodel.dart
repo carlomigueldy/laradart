@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:laradart/datamodels/user.dart';
-import 'package:laradart/services/alert_service.dart';
-import 'package:laradart/services/authentication_service.dart';
-import 'package:laradart/services/theme_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/app/routes.gr.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../../app/locator.dart';
+import '../../../../../app/routes.gr.dart';
+import '../../../../../datamodels/user.dart';
+import '../../../../../services/alert_service.dart';
+import '../../../../../services/authentication_service.dart';
+import '../../../../../services/theme_service.dart';
+
+@singleton
 class HomeViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
@@ -31,7 +32,7 @@ class HomeViewModel extends ReactiveViewModel {
   String get userFullName => _authService.user.fullName ?? 'anonymous user';
 
   initialize() {
-    print('init');
+    print('[HomeViewModel] init');
   }
 
   setToken() {}

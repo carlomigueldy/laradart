@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laradart/app/locator.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -6,11 +7,13 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      viewModelBuilder: () => HomeViewModel(),
+      disposeViewModel: false,
+      initialiseSpecialViewModelsOnce: true,
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
         return _HomeViewBody(model: model);
       },
+      viewModelBuilder: () => locator<HomeViewModel>(),
     );
   }
 }

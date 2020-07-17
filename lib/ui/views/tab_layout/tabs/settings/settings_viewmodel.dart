@@ -1,5 +1,5 @@
+import 'package:laradart/datamodels/user.dart';
 import 'package:laradart/services/authentication_service.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:laradart/app/locator.dart';
 import 'package:stacked/stacked.dart';
 
@@ -10,6 +10,7 @@ class SettingsViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices => [_authService];
 
   bool get loggedIn => _authService.loggedIn;
+  User get user => _authService.user;
 
   void logout() {
     _authService.logout();
