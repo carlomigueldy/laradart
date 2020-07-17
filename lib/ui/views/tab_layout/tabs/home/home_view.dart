@@ -32,8 +32,23 @@ class _HomeViewBody extends StatelessWidget {
           title: 'Dashboard',
         ),
         Container(
-          height: 300,
-          color: Colors.blue,
+          height: 225,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 15,
+            itemBuilder: (context, index) {
+              return Container(
+                height: 225,
+                width: 125,
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              );
+            },
+          ),
         )
       ],
     );
