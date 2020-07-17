@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/ui/views/home/home_viewmodel.dart';
-import 'package:responsive_builder/responsive_builder.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
@@ -10,14 +9,7 @@ class HomeView extends StatelessWidget {
       viewModelBuilder: () => HomeViewModel(),
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
-        return ScreenTypeLayout(
-          mobile: Scaffold(
-            appBar: AppBar(
-              title: Text('Home'),
-            ),
-            body: _HomeViewBody(model: model),
-          ),
-        );
+        return _HomeViewBody(model: model);
       },
     );
   }
@@ -37,23 +29,23 @@ class _HomeViewBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
+          Text("Hello welcome back, " + model.userFullName),
           Text(model.loggedIn ? 'You are logged in' : 'You are not logged in'),
           Text(model.isDark ? 'Theme is dark' : 'Theme is light'),
           RaisedButton(
             child: Text('Set Token'),
             onPressed: () => model.setToken(),
+            elevation: 0,
           ),
           RaisedButton(
             child: Text('Navigate to Login View'),
             onPressed: () => model.navigateToLogin(),
+            elevation: 0,
           ),
           RaisedButton(
             child: Text('Display Snackbar'),
             onPressed: () => model.showSnackbar(),
-          ),
-          RaisedButton(
-            child: Text('Toggle Theme'),
-            onPressed: () => model.toggleTheme(),
+            elevation: 0,
           ),
         ],
       ),

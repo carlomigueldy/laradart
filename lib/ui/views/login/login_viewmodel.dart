@@ -14,13 +14,17 @@ class LoginViewModel extends ReactiveViewModel {
   String get token => _authService.token;
   bool get loggedIn => _authService.loggedIn;
 
-  login() {
-    _authService.loginWithEmail(
+  login() async {
+    setBusy(true);
+
+    await _authService.loginWithEmail(
       EmailCredential(
         email: "admin@admin.com",
         password: "password",
       ),
     );
+
+    setBusy(false);
   }
 
   deleteToken() {

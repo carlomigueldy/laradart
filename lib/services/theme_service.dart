@@ -66,12 +66,15 @@ class ThemeService with ReactiveServiceMixin {
   /// Here we define our theme colors for light theme
   ThemeData get lightTheme {
     return ThemeData(
-      primaryColor: Colors.indigo[400],
+      primaryColor: Colors.indigo,
       accentColor: Colors.indigo[100],
       fontFamily: GoogleFonts.poppins().fontFamily,
       brightness: Brightness.light,
       backgroundColor: Colors.white,
-      appBarTheme: AppBarTheme(elevation: 0),
+      appBarTheme: AppBarTheme(
+        elevation: 0,
+        centerTitle: true,
+      ),
       snackBarTheme: SnackBarThemeData(
         elevation: 10,
         behavior: SnackBarBehavior.floating,
@@ -85,7 +88,7 @@ class ThemeService with ReactiveServiceMixin {
         ),
       ),
       buttonTheme: ButtonThemeData(
-        buttonColor: Colors.indigo[400],
+        buttonColor: Colors.indigo,
         textTheme: ButtonTextTheme.primary,
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(15.0),

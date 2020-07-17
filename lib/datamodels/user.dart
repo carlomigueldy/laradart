@@ -11,6 +11,7 @@ class User {
   final String firstName;
   final String middleName;
   final String lastName;
+  final String fullName;
   final String email;
 
   User({
@@ -18,6 +19,7 @@ class User {
     this.firstName,
     this.middleName,
     this.lastName,
+    this.fullName,
     this.email,
   });
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

@@ -9,16 +9,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:laradart/ui/views/splash/splash_view.dart';
 import 'package:laradart/ui/views/login/login_view.dart';
-import 'package:laradart/ui/views/home/home_view.dart';
+import 'package:laradart/ui/views/tab_layout/tab_layout_view.dart';
 
 class Routes {
   static const String splashView = '/';
   static const String loginView = '/login';
-  static const String homeView = '/home';
+  static const String tabLayoutView = '/home';
   static const all = <String>{
     splashView,
     loginView,
-    homeView,
+    tabLayoutView,
   };
 }
 
@@ -28,7 +28,7 @@ class Router extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.loginView, page: LoginView),
-    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.tabLayoutView, page: TabLayoutView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -45,9 +45,9 @@ class Router extends RouterBase {
         settings: data,
       );
     },
-    HomeView: (RouteData data) {
+    TabLayoutView: (RouteData data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => HomeView(),
+        builder: (context) => TabLayoutView(),
         settings: data,
       );
     },

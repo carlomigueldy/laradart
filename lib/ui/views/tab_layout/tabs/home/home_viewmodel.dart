@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:laradart/datamodels/user.dart';
 import 'package:laradart/services/authentication_service.dart';
 import 'package:laradart/services/theme_service.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -21,6 +22,12 @@ class HomeViewModel extends ReactiveViewModel {
 
   bool get loggedIn => _authService.loggedIn;
   bool get isDark => _themeService.isDark;
+
+  int _bottomNavIndex = 0;
+  int get bottomNavIndex => _bottomNavIndex;
+
+  User get user => _authService.user;
+  String get userFullName => _authService.user.fullName ?? 'anonymous user';
 
   initialize() {
     print('init');

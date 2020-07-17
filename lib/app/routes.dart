@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:laradart/ui/views/home/home_view.dart';
 import 'package:laradart/ui/views/login/login_view.dart';
 import 'package:laradart/ui/views/splash/splash_view.dart';
+import 'package:laradart/ui/views/tab_layout/tab_layout_view.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
@@ -16,7 +16,8 @@ import 'package:laradart/ui/views/splash/splash_view.dart';
     ),
     MaterialRoute(
       path: '/home',
-      page: HomeView,
+      page: TabLayoutView,
+      // page: HomeView,
     ),
   ],
 )

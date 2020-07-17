@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:laradart/services/alert_service.dart';
 import 'package:laradart/services/authentication_service.dart';
 import 'package:laradart/services/third_party_services_module.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -12,6 +13,7 @@ import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
+  g.registerLazySingleton<AlertService>(() => AlertService());
   g.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
   g.registerLazySingleton<DialogService>(
       () => thirdPartyServicesModule.dialogService);
