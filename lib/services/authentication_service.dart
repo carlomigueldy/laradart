@@ -34,7 +34,7 @@ class AuthenticationService with ReactiveServiceMixin {
   RxValue<User> _user = RxValue<User>(initial: null);
   User get user => _user.value;
 
-  static const _authTokenName = 'auth.token';
+  static const authTokenKey = 'auth.token';
 
   /// Initialize the authentication service to check if user contains token.
   /// And if user contains token from [SharedPreferences] then we set [_token]
@@ -44,8 +44,8 @@ class AuthenticationService with ReactiveServiceMixin {
   void tryAutoLogin() async {
     final SharedPreferences localStorage = await _localStorage;
 
-    if (localStorage.containsKey(_authTokenName)) {
-      String token = localStorage.getString(_authTokenName);
+    if (localStorage.containsKey(authTokenKey)) {
+      String token = localStorage.getString(authTokenKey);
       _token.value = token;
 
       await fetchUser();
@@ -126,9 +126,7 @@ class AuthenticationService with ReactiveServiceMixin {
     try {
       Response response = await dio.get(
         '/api/auth/user',
-        options: Options(
-          headers: {"Authorization": "Bearer ${_token.value}"},
-        ),
+        options: authorizationHeader(),
       );
 
       User data = User.fromJson(response.data);
@@ -145,9 +143,7 @@ class AuthenticationService with ReactiveServiceMixin {
     try {
       await dio.get(
         '/api/auth/logout',
-        options: Options(
-          headers: {"Authorization": "Bearer ${_token.value}"},
-        ),
+        options: authorizationHeader(),
       );
 
       deleteToken();
@@ -162,6 +158,15 @@ class AuthenticationService with ReactiveServiceMixin {
     }
   }
 
+  /// Use the authorization header with Bearer token.
+  ///
+  /// @return [Options]
+  Options authorizationHeader() {
+    return Options(
+      headers: {"Authorization": "Bearer ${_token.value}"},
+    );
+  }
+
   /// Sets the authentication token in the state and also locally
   /// using [SharedPreferences]
   ///
@@ -170,7 +175,7 @@ class AuthenticationService with ReactiveServiceMixin {
   void setToken(String token) async {
     final SharedPreferences localStorage = await _localStorage;
     _token.value = token;
-    localStorage.setString(_authTokenName, token);
+    localStorage.setString(authTokenKey, token);
   }
 
   /// Destroy the auth token from state and in [SharedPreferences]
@@ -179,7 +184,7 @@ class AuthenticationService with ReactiveServiceMixin {
   void deleteToken() async {
     final SharedPreferences localStorage = await _localStorage;
     _token.value = "";
-    localStorage.remove(_authTokenName);
+    localStorage.remove(authTokenKey);
   }
 
   /// A callback function receiving [DioError] as first parameter
