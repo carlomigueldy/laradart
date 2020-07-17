@@ -65,15 +65,24 @@ class ThemeService with ReactiveServiceMixin {
 
   /// Here we define our theme colors for light theme
   ThemeData get lightTheme {
+    var fontFamily2 = GoogleFonts.poppins().fontFamily;
     return ThemeData(
       primaryColor: Colors.indigo,
       accentColor: Colors.indigo[100],
-      fontFamily: GoogleFonts.poppins().fontFamily,
+      fontFamily: fontFamily2,
       brightness: Brightness.light,
       backgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: true,
+        color: Colors.white,
+        textTheme: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontFamily: fontFamily2,
+          ),
+        ),
       ),
       snackBarTheme: SnackBarThemeData(
         elevation: 10,

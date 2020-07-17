@@ -8,6 +8,7 @@ part 'user.g.dart';
 )
 class User {
   final int id;
+  final String avatar;
   final String firstName;
   final String middleName;
   final String lastName;
@@ -16,6 +17,7 @@ class User {
 
   User({
     this.id,
+    this.avatar,
     this.firstName,
     this.middleName,
     this.lastName,

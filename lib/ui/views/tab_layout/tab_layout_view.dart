@@ -30,11 +30,11 @@ class TabLayoutView extends StatelessWidget {
                     title: SizedBox.shrink(),
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.home),
-                    title: SizedBox.shrink(),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.settings),
+                    icon: CircleAvatar(
+                      backgroundImage: model.user.avatar != null
+                          ? NetworkImage(model.user.avatar)
+                          : AssetImage('icons/icon-tile.png'),
+                    ),
                     title: SizedBox.shrink(),
                   ),
                 ],
@@ -51,8 +51,6 @@ class TabLayoutView extends StatelessWidget {
       case 0:
         return HomeView();
       case 1:
-        return HomeView();
-      case 2:
         return SettingsView();
       default:
         return HomeView();

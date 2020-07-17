@@ -29,6 +29,11 @@ class _HomeViewBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
+          Image.asset(
+            '/icons/icon-tile.png',
+            height: 150,
+            width: 150,
+          ),
           Text("Hello welcome back, " + model.userFullName),
           Text(model.loggedIn ? 'You are logged in' : 'You are not logged in'),
           Text(model.isDark ? 'Theme is dark' : 'Theme is light'),

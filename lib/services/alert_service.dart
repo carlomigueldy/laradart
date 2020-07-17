@@ -28,12 +28,15 @@ class AlertService {
       message: message,
       borderRadius: 15,
       icon: getIconByType(type),
-      margin: EdgeInsets.all(15),
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(
+        horizontal: 30,
+        vertical: 20,
+      ),
       shouldIconPulse: false,
       snackStyle: SnackStyle.FLOATING,
       snackPosition: SnackPosition.BOTTOM,
-      dismissDirection: SnackDismissDirection.HORIZONTAL,
+      // dismissDirection: SnackDismissDirection.HORIZONTAL,
       duration: const Duration(seconds: 2),
       isDismissible: true,
     );

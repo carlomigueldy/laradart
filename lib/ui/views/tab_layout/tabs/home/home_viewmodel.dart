@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:laradart/datamodels/user.dart';
+import 'package:laradart/services/alert_service.dart';
 import 'package:laradart/services/authentication_service.dart';
 import 'package:laradart/services/theme_service.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,7 +12,7 @@ import 'package:stacked/stacked.dart';
 class HomeViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
-  final _snackbarService = locator<SnackbarService>();
+  final _alertService = locator<AlertService>();
   final _themeService = locator<ThemeService>();
 
   @override
@@ -40,16 +41,9 @@ class HomeViewModel extends ReactiveViewModel {
   }
 
   showSnackbar() {
-    _snackbarService.showCustomSnackBar(
-      message: "Hello there user!",
-      borderRadius: 15,
-      margin: EdgeInsets.all(15),
-      shouldIconPulse: false,
-      snackStyle: SnackStyle.FLOATING,
-      snackPosition: SnackPosition.TOP,
-      dismissDirection: SnackDismissDirection.HORIZONTAL,
-      duration: const Duration(seconds: 2),
-      isDismissible: true,
+    _alertService.showSnackbar(
+      message: "Snackbar called!",
+      type: SnackBarType.INFO,
     );
   }
 
