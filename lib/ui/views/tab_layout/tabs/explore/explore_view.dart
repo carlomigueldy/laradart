@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/ui/widgets/page_header.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../../app/locator.dart';
-import './search_viewmodel.dart';
+import '../../../../../ui/views/tab_layout/tabs/explore/explore_viewmodel.dart';
+import '../../../../../ui/widgets/page_header.dart';
 
-class SearchView extends StatelessWidget {
+class ExploreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<SearchViewModel>.reactive(
-      viewModelBuilder: () => locator<SearchViewModel>(),
+    return ViewModelBuilder<ExploreViewModel>.reactive(
+      viewModelBuilder: () => locator<ExploreViewModel>(),
       initialiseSpecialViewModelsOnce: true,
       disposeViewModel: false,
       onModelReady: (model) => model.initialize(),
       builder: (context, model, child) {
-        return _SearchViewBody(model: model);
+        return _ExploreViewBody(model: model);
       },
     );
   }
 }
 
-class _SearchViewBody extends StatelessWidget {
-  final SearchViewModel model;
+class _ExploreViewBody extends StatelessWidget {
+  final ExploreViewModel model;
 
-  const _SearchViewBody({Key key, this.model}) : super(key: key);
+  const _ExploreViewBody({Key key, this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       children: [
         PageHeader(
-          title: 'Search',
+          title: 'Explore',
         ),
         Container(
           height: 500,
@@ -38,7 +38,7 @@ class _SearchViewBody extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/illustrations/png/search.png'),
+              image: AssetImage('assets/illustrations/png/explore.png'),
             ),
           ),
         )

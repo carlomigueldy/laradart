@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:laradart/ui/views/tab_layout/tab_layout_viewmodel.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/explore/explore_view.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/home/home_view.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/search/search_view.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/settings/settings_view.dart';
@@ -51,6 +52,10 @@ class TabLayoutView extends StatelessWidget {
                     title: SizedBox.shrink(),
                   ),
                   BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.location),
+                    title: SizedBox.shrink(),
+                  ),
+                  BottomNavigationBarItem(
                     icon: CircleAvatar(
                       backgroundImage: model.user != null
                           ? NetworkImage(model.user.avatar)
@@ -74,6 +79,8 @@ class TabLayoutView extends StatelessWidget {
       case 1:
         return SearchView();
       case 2:
+        return ExploreView();
+      case 3:
         return SettingsView();
       default:
         return HomeView();

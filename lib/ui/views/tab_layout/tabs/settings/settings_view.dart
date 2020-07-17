@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/app/locator.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../../../app/locator.dart';
+import '../../../../../ui/widgets/page_header.dart';
 import '../settings/settings_viewmodel.dart';
 
 class SettingsView extends StatelessWidget {
@@ -44,7 +46,10 @@ class _MobileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        _PageHeader(model: model),
+        PageHeader(
+          title: 'Settings',
+          subtitle: model.user != null ? model.user.fullName : 'anonymous user',
+        ),
         SizedBox(height: 5),
         _UserAvatar(model: model),
         SizedBox(height: 10),
@@ -148,42 +153,6 @@ class _UserAvatar extends StatelessWidget {
               ? NetworkImage(model.user.avatar ?? "")
               : AssetImage('icons/icon-tile.png'),
         ),
-      ),
-    );
-  }
-}
-
-class _PageHeader extends StatelessWidget {
-  const _PageHeader({
-    Key key,
-    @required this.model,
-  }) : super(key: key);
-
-  final SettingsViewModel model;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(15),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Settings',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            model.user != null ? model.user.fullName : 'anonymous user',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
       ),
     );
   }
