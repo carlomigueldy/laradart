@@ -1,8 +1,9 @@
 import 'package:injectable/injectable.dart';
-import 'package:laradart/datamodels/user.dart';
-import 'package:laradart/services/authentication_service.dart';
-import 'package:laradart/app/locator.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../../../datamodels/user.dart';
+import '../../../../../services/authentication_service.dart';
+import '../../../../../app/locator.dart';
 
 @singleton
 class SettingsViewModel extends ReactiveViewModel {

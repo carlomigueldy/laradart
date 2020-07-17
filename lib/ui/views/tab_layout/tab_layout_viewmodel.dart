@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/datamodels/user.dart';
-import 'package:laradart/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../app/locator.dart';
+import '../../../datamodels/user.dart';
+import '../../../services/authentication_service.dart';
 
 class TabLayoutViewModel extends IndexTrackingViewModel {
   final _authService = locator<AuthenticationService>();

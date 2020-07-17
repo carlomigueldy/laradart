@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/ui/views/login/login_viewmodel.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
+
+import './login_viewmodel.dart';
 
 class LoginView extends StatelessWidget {
   @override

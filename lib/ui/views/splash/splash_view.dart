@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/ui/views/splash/splash_viewmodel.dart';
 import 'package:stacked/stacked.dart';
+
+import './splash_viewmodel.dart';
 
 class SplashView extends StatelessWidget {
   @override

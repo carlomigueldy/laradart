@@ -1,6 +1,7 @@
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/services/authentication_service.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../app/locator.dart';
+import '../../../services/authentication_service.dart';
 
 class SplashViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();

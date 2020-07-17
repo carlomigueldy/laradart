@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/ui/views/tab_layout/tabs/home/home_viewmodel.dart';
-import 'package:laradart/ui/widgets/page_header.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../../../app/locator.dart';
+import '../../../../widgets/page_header.dart';
+import './home_viewmodel.dart';
 
 class HomeView extends StatelessWidget {
   @override

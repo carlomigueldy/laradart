@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:laradart/ui/widgets/page_header.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../widgets/page_header.dart';
 import '../../../../../app/locator.dart';
 import './search_viewmodel.dart';
 

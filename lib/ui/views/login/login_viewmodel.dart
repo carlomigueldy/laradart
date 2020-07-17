@@ -1,8 +1,8 @@
-import 'package:laradart/app/locator.dart';
-import 'package:laradart/app/routes.gr.dart';
-import 'package:laradart/services/authentication_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../app/locator.dart';
+import '../../../services/authentication_service.dart';
 
 class LoginViewModel extends ReactiveViewModel {
   final _authService = locator<AuthenticationService>();

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:injectable/injectable.dart';
-import 'package:laradart/app/locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+
+import '../app/locator.dart';
 
 enum SnackBarType {
   SUCCESS,

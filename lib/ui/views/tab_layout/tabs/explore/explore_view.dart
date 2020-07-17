@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../../../app/locator.dart';
-import '../../../../../ui/views/tab_layout/tabs/explore/explore_viewmodel.dart';
-import '../../../../../ui/widgets/page_header.dart';
+import '../../../../widgets/page_header.dart';
+import './explore_viewmodel.dart';
 
 class ExploreView extends StatelessWidget {
   @override
