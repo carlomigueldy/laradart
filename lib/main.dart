@@ -16,9 +16,7 @@ class LaraDartApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'LaraDart Starter',
       themeMode: locator<ThemeService>().theme,
-      theme: locator<ThemeService>().isDark
-          ? locator<ThemeService>().darkTheme
-          : locator<ThemeService>().lightTheme,
+      theme: locator<ThemeService>().lightTheme,
       navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: Router().onGenerateRoute,
       initialRoute: Routes.splashView,
