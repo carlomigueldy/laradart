@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:observable_ish/observable_ish.dart';
@@ -12,15 +10,16 @@ import '../datamodels/auth_response.dart';
 import '../datamodels/user.dart';
 import '../app/routes.gr.dart';
 import '../app/locator.dart';
-import 'alert_service.dart';
+import './alert_service.dart';
 
 @lazySingleton
 class AuthenticationService with ReactiveServiceMixin {
   /// Here we instantiate all the services and
   /// other classes that this [AuthenticationService] requires.
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final _navigationService = locator<NavigationService>();
   final _alertService = locator<AlertService>();
+
+  Future<SharedPreferences> _localStorage = SharedPreferences.getInstance();
 
   AuthenticationService() {
     listenToReactiveValues([_token]);
@@ -32,7 +31,7 @@ class AuthenticationService with ReactiveServiceMixin {
   bool get loggedIn => _token.value.isNotEmpty ? true : false;
 
   /// @return [User] user
-  RxValue<User> _user = RxValue<User>(initial: User());
+  RxValue<User> _user = RxValue<User>(initial: null);
   User get user => _user.value;
 
   static const _authTokenName = 'auth.token';
@@ -42,11 +41,11 @@ class AuthenticationService with ReactiveServiceMixin {
   /// to the token that was stored locally.
   ///
   /// @return void
-  void initialize() async {
-    final SharedPreferences prefs = await _prefs;
+  void tryAutoLogin() async {
+    final SharedPreferences localStorage = await _localStorage;
 
-    if (prefs.containsKey(_authTokenName)) {
-      String token = prefs.getString(_authTokenName);
+    if (localStorage.containsKey(_authTokenName)) {
+      String token = localStorage.getString(_authTokenName);
       _token.value = token;
 
       await fetchUser();
@@ -169,18 +168,18 @@ class AuthenticationService with ReactiveServiceMixin {
   /// @param string [token]
   /// @return void
   void setToken(String token) async {
-    final SharedPreferences prefs = await _prefs;
+    final SharedPreferences localStorage = await _localStorage;
     _token.value = token;
-    prefs.setString(_authTokenName, token);
+    localStorage.setString(_authTokenName, token);
   }
 
   /// Destroy the auth token from state and in [SharedPreferences]
   ///
   /// @return void
   void deleteToken() async {
-    final SharedPreferences prefs = await _prefs;
+    final SharedPreferences localStorage = await _localStorage;
     _token.value = "";
-    prefs.remove(_authTokenName);
+    localStorage.remove(_authTokenName);
   }
 
   /// A callback function receiving [DioError] as first parameter

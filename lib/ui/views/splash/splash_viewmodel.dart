@@ -9,7 +9,7 @@ class SplashViewModel extends ReactiveViewModel {
   List<ReactiveServiceMixin> get reactiveServices => [_authService];
 
   init() {
-    _authService.initialize();
+    _authService.tryAutoLogin();
     print('has token ' + _authService.loggedIn.toString());
   }
 }
