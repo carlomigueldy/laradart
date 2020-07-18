@@ -74,12 +74,33 @@ class _DesktopScreen extends StatelessWidget {
                   horizontal: 10,
                   vertical: 5,
                 ),
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => SizedBox(height: 5),
                   itemCount: model.tabs.length,
-                  itemBuilder: (context, index) => ListTile(
-                    title: Text(model.tabs[index]['title']),
-                    onTap: () => model.setIndex(index),
-                    // trailing: model.tabs[index]['icon'],
+                  itemBuilder: (context, index) => Container(
+                    decoration: BoxDecoration(
+                      color: model.currentIndex == index
+                          ? Theme.of(context).primaryColor
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        model.tabs[index]['title'],
+                        style: TextStyle(
+                            fontWeight: model.currentIndex == index
+                                ? FontWeight.bold
+                                : FontWeight.normal,
+                            color: model.currentIndex == index
+                                ? Colors.white
+                                : Colors.black),
+                      ),
+                      onTap: () => model.setIndex(index),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      // trailing: model.tabs[index]['icon'],
+                    ),
                   ),
                 ),
               ),
