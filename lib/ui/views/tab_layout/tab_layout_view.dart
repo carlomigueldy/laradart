@@ -13,35 +13,36 @@ import './tabs/settings/settings_view.dart';
 class TabLayoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // only have a PageController when using PageView
+    final _pageController = PageController(initialPage: 0);
+
     return ViewModelBuilder<TabLayoutViewModel>.reactive(
       viewModelBuilder: () => TabLayoutViewModel(),
       builder: (context, model, child) {
         return ScreenTypeLayout(
           mobile: SafeArea(
             child: Scaffold(
-              body: PageTransitionSwitcher(
-                duration: const Duration(milliseconds: 300),
-                reverse: model.reverse,
-                transitionBuilder: (
-                  Widget child,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                ) {
-                  return SharedAxisTransition(
-                    child: child,
-                    animation: animation,
-                    secondaryAnimation: secondaryAnimation,
-                    transitionType: SharedAxisTransitionType.horizontal,
-                  );
-                },
-                child: getViewForIndex(model.currentIndex),
+              // body: _pageTransitionSwitcher(model),
+              body: PageView(
+                onPageChanged: model.setIndex,
+                controller: _pageController,
+                children: [
+                  HomeView(),
+                  SearchView(),
+                  ExploreView(),
+                  SettingsView(),
+                ],
               ),
               bottomNavigationBar: BottomNavigationBar(
                 iconSize: 32,
                 type: BottomNavigationBarType.fixed,
                 currentIndex: model.currentIndex,
                 onTap: (int value) {
-                  model.setIndex(value);
+                  // only when using pageTransitionSwitcher
+                  // model.setIndex(value);
+
+                  // jump to page when using PageView
+                  _pageController.jumpToPage(value);
                 },
                 items: [
                   BottomNavigationBarItem(
@@ -70,6 +71,26 @@ class TabLayoutView extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  PageTransitionSwitcher _pageTransitionSwitcher(TabLayoutViewModel model) {
+    return PageTransitionSwitcher(
+      duration: const Duration(milliseconds: 300),
+      reverse: model.reverse,
+      transitionBuilder: (
+        Widget child,
+        Animation<double> animation,
+        Animation<double> secondaryAnimation,
+      ) {
+        return SharedAxisTransition(
+          child: child,
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          transitionType: SharedAxisTransitionType.horizontal,
+        );
+      },
+      child: getViewForIndex(model.currentIndex),
     );
   }
 

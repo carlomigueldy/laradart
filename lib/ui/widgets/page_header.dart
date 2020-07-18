@@ -24,7 +24,7 @@ class PageHeader extends StatelessWidget {
           Text(
             title ?? "",
             style: TextStyle(
-              fontSize: 32,
+              fontSize: 26,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
             ),

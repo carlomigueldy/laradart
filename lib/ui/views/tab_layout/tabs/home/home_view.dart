@@ -32,26 +32,60 @@ class _HomeViewBody extends StatelessWidget {
         PageHeader(
           title: 'Dashboard',
         ),
-        Container(
-          height: 225,
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 15,
-            itemBuilder: (context, index) {
-              return Container(
-                height: 225,
-                width: 125,
-                margin: EdgeInsets.symmetric(horizontal: 5),
+        _horizontalSliders(),
+        Padding(
+          padding: EdgeInsets.all(10),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            children: List.generate(
+              8,
+              (index) => Container(
+                height: 75,
+                width: 75,
+                margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              );
-            },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.insert_chart,
+                    ),
+                    Text(
+                      'Home',
+                      style: TextStyle(fontSize: 12),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
         )
       ],
+    );
+  }
+
+  Container _horizontalSliders() {
+    return Container(
+      height: 225,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 15,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 225,
+            width: 125,
+            margin: EdgeInsets.symmetric(horizontal: 5),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(15),
+            ),
+          );
+        },
+      ),
     );
   }
 }
