@@ -1,6 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:laradart/app/routes.gr.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked/stacked.dart';
+import 'package:dio/dio.dart';
 
 import '../../../app/locator.dart';
 import '../../../services/authentication_service.dart';
@@ -9,6 +11,7 @@ import '../../../app/config.dart';
 @singleton
 class TimezoneListViewModel extends FutureViewModel<dynamic> {
   final _authService = locator<AuthenticationService>();
+  final _router = locator<NavigationService>();
 
   @override
   Future<dynamic> futureToRun() async {
@@ -24,5 +27,9 @@ class TimezoneListViewModel extends FutureViewModel<dynamic> {
     } on DioError catch (error) {
       _authService.handleError(error);
     }
+  }
+
+  navigateToDetail({int userId}) {
+    _router.navigateTo(Routes.userDetailView(id: userId));
   }
 }

@@ -147,7 +147,7 @@ class AuthenticationService with ReactiveServiceMixin {
       );
 
       deleteToken();
-      _user.value = User();
+      _user.value = User(id: 0);
       _alertService.showSnackbar(
         message: "You have logged out.",
         type: SnackBarType.INFO,

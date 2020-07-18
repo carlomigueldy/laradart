@@ -27,12 +27,13 @@ class AlertService {
   }) {
     _snackbarService.showCustomSnackBar(
       message: message,
-      messageText: Text(
-        message,
-        style: TextStyle(color: Colors.black),
-      ),
       icon: getIconByType(type),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      // messageText: Text(
+      //   message,
+      //   style: TextStyle(color: Colors.black),
+      // ),
+
       // borderRadius: 15,
       // margin: EdgeInsets.all(5),
       padding: EdgeInsets.symmetric(

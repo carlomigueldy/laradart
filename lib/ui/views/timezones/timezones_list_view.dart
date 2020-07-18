@@ -18,7 +18,7 @@ class TimezoneListView extends StatelessWidget {
             title: Text('Timezones'),
           ),
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: model.isBusy
                 ? SafeArea(child: Center(child: CircularProgressIndicator()))
                 // : Center(
@@ -26,11 +26,26 @@ class TimezoneListView extends StatelessWidget {
                 //   )
                 : !model.hasError
                     ? ListView.separated(
-                        itemBuilder: (context, index) => Text(
-                          model.data[index]['name'],
-                        ),
+                        itemBuilder: (context, index) {
+                          return Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              title: Text(
+                                model.data[index]['name'],
+                              ),
+                              trailing: Icon(Icons.remove_red_eye),
+                              onTap: () =>
+                                  model.navigateToDetail(userId: index),
+                            ),
+                          );
+                        },
                         separatorBuilder: (context, index) => const SizedBox(
-                          height: 20,
+                          height: 1,
                         ),
                         itemCount: model.data.length,
                       )
