@@ -44,7 +44,7 @@ class _HomeViewBody extends StatelessWidget {
                 width: 75,
                 margin: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: Colors.indigo[400],
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Column(
@@ -52,10 +52,14 @@ class _HomeViewBody extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.insert_chart,
+                      color: Colors.white,
                     ),
                     Text(
                       'Home',
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
                     )
                   ],
                 ),
@@ -69,19 +73,58 @@ class _HomeViewBody extends StatelessWidget {
 
   Container _horizontalSliders() {
     return Container(
-      height: 225,
+      height: 175,
       padding: EdgeInsets.symmetric(horizontal: 5),
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 15,
         itemBuilder: (context, index) {
-          return Container(
-            height: 225,
-            width: 125,
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(15),
+          return GestureDetector(
+            onTap: () => model.navigateToTimezoneList(),
+            child: Container(
+              height: 175,
+              width: 275,
+              margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.indigo[800].withOpacity(0.5),
+                    offset: Offset(0, 5),
+                    spreadRadius: 0.5,
+                    blurRadius: 6,
+                  )
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 15, left: 15),
+                    child: Text(
+                      'Timezones',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Text(
+                        'Lorem ipsum dolor some text here for a content.',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

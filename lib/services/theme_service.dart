@@ -74,15 +74,15 @@ class ThemeService with ReactiveServiceMixin {
       backgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         elevation: 0,
-        centerTitle: true,
-        color: Colors.white,
-        textTheme: TextTheme(
-          headline6: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontFamily: fontFamily2,
-          ),
-        ),
+        // centerTitle: true,
+        // color: Colors.white,
+        // textTheme: TextTheme(
+        //   headline6: TextStyle(
+        //     color: Colors.black,
+        //     fontSize: 16,
+        //     fontFamily: fontFamily2,
+        //   ),
+        // ),
       ),
       snackBarTheme: SnackBarThemeData(
         elevation: 10,

@@ -77,7 +77,7 @@ class AuthenticationService with ReactiveServiceMixin {
       setToken(data.accessToken);
       await fetchUser();
       _alertService.showSnackbar(
-        message: "You have logged in",
+        message: "You have logged in.",
         type: SnackBarType.SUCCESS,
       );
       _navigationService.pushNamedAndRemoveUntil(Routes.tabLayoutView);
@@ -108,7 +108,7 @@ class AuthenticationService with ReactiveServiceMixin {
       setToken(data.accessToken);
       await fetchUser();
       _alertService.showSnackbar(
-        message: "You have logged in",
+        message: "You have logged in.",
         type: SnackBarType.SUCCESS,
       );
       _navigationService.pushNamedAndRemoveUntil(Routes.tabLayoutView);

@@ -41,6 +41,10 @@ class HomeViewModel extends ReactiveViewModel {
     _navigationService.navigateTo(Routes.loginView);
   }
 
+  navigateToTimezoneList() {
+    _navigationService.navigateTo(Routes.timezoneListView);
+  }
+
   showSnackbar() {
     _alertService.showSnackbar(
       message: "Snackbar called!",

@@ -10,15 +10,25 @@ import 'package:auto_route/auto_route.dart';
 import 'package:laradart/ui/views/splash/splash_view.dart';
 import 'package:laradart/ui/views/login/login_view.dart';
 import 'package:laradart/ui/views/tab_layout/tab_layout_view.dart';
+import 'package:laradart/ui/views/timezones/timezones_list_view.dart';
+import 'package:laradart/ui/views/users/user_list_view.dart';
+import 'package:laradart/ui/views/users/user_detail/user_detail_view.dart';
 
 class Routes {
   static const String splashView = '/';
   static const String loginView = '/login';
   static const String tabLayoutView = '/home';
+  static const String timezoneListView = '/timezones';
+  static const String userListView = '/users';
+  static const String _userDetailView = '/users/:id';
+  static userDetailView({@required id}) => '/users/$id';
   static const all = <String>{
     splashView,
     loginView,
     tabLayoutView,
+    timezoneListView,
+    userListView,
+    _userDetailView,
   };
 }
 
@@ -29,6 +39,9 @@ class Router extends RouterBase {
     RouteDef(Routes.splashView, page: SplashView),
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.tabLayoutView, page: TabLayoutView),
+    RouteDef(Routes.timezoneListView, page: TimezoneListView),
+    RouteDef(Routes.userListView, page: UserListView),
+    RouteDef(Routes._userDetailView, page: UserDetailView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -48,6 +61,24 @@ class Router extends RouterBase {
     TabLayoutView: (RouteData data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => TabLayoutView(),
+        settings: data,
+      );
+    },
+    TimezoneListView: (RouteData data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => TimezoneListView(),
+        settings: data,
+      );
+    },
+    UserListView: (RouteData data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserListView(),
+        settings: data,
+      );
+    },
+    UserDetailView: (RouteData data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserDetailView(),
         settings: data,
       );
     },
