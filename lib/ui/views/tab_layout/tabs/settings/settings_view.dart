@@ -17,12 +17,6 @@ class SettingsView extends StatelessWidget {
         return SafeArea(
           child: model.user != null
               ? ScreenTypeLayout(
-                  desktop: Container(
-                    child: Text('Ayy'),
-                  ),
-                  tablet: Container(
-                    child: Text('Tablet dimensions'),
-                  ),
                   mobile: _MobileScreen(model: model),
                 )
               : Center(
@@ -51,7 +45,9 @@ class _MobileScreen extends StatelessWidget {
           subtitle: model.user != null ? model.user.fullName : 'anonymous user',
         ),
         SizedBox(height: 5),
-        _UserAvatar(model: model),
+        Center(
+          child: _UserAvatar(model: model),
+        ),
         SizedBox(height: 10),
         listHeader(
           label: 'Profile',
@@ -141,8 +137,8 @@ class _UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
-      width: 100,
+      height: 300,
+      width: 300,
       margin: EdgeInsets.symmetric(horizontal: 50),
       decoration: BoxDecoration(
         color: Colors.blue,

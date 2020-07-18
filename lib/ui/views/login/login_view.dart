@@ -12,8 +12,112 @@ class LoginView extends StatelessWidget {
       builder: (context, model, child) {
         return ScreenTypeLayout(
           mobile: _MobileScreen(model: model),
+          desktop: _DesktopScreen(model: model),
+          tablet: _TabletScreen(model: model),
         );
       },
+    );
+  }
+}
+
+class _TabletScreen extends StatelessWidget {
+  final LoginViewModel model;
+
+  _TabletScreen({
+    this.model,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          height: screenSize.height,
+          width: screenSize.width,
+          // child: LoginForm(model: model),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: screenSize.height,
+                width: screenSize.width * 0.4,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      'https://images.pexels.com/photos/586063/pexels-photo-586063.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Container(
+                height: screenSize.height,
+                width: screenSize.width * 0.6,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  child: LoginForm(
+                    model: model,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DesktopScreen extends StatelessWidget {
+  final LoginViewModel model;
+
+  _DesktopScreen({
+    this.model,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          height: screenSize.height,
+          width: screenSize.width,
+          // child: LoginForm(model: model),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: screenSize.height,
+                width: screenSize.width * 0.6,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      'https://images.pexels.com/photos/586063/pexels-photo-586063.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Container(
+                height: screenSize.height,
+                width: screenSize.width * 0.4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  child: LoginForm(
+                    model: model,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -26,31 +130,42 @@ class _MobileScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final _form = GlobalKey<FormState>();
-    final _email = TextEditingController(text: 'admin@admin.com');
-    final _password = TextEditingController(text: 'password');
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 15,
+            horizontal: 75,
           ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            image: DecorationImage(
-              image: NetworkImage(
-                'https://images.pexels.com/photos/586063/pexels-photo-586063.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Form(
+          color: Colors.white,
+          child: LoginForm(model: model),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatelessWidget {
+  const LoginForm({
+    Key key,
+    @required this.model,
+  }) : super(key: key);
+
+  final LoginViewModel model;
+
+  @override
+  Widget build(BuildContext context) {
+    final _form = GlobalKey<FormState>();
+    final _email = TextEditingController(text: 'admin@admin.com');
+    final _password = TextEditingController(text: 'password');
+    final screenSize = MediaQuery.of(context).size;
+
+    return !model.isBusy
+        ? Form(
             key: _form,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: EdgeInsets.all(15),
@@ -59,7 +174,6 @@ class _MobileScreen extends StatelessWidget {
                       Text(
                         'Cool App Name',
                         style: TextStyle(
-                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 36,
                         ),
@@ -68,7 +182,6 @@ class _MobileScreen extends StatelessWidget {
                         "Lorem ipsum the app name is so cool I don't event care. "
                         "I am using a stock photo don't worry.",
                         style: TextStyle(
-                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -76,12 +189,13 @@ class _MobileScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: screenSize.height * 0.1),
                 Column(
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextFormField(
@@ -96,7 +210,7 @@ class _MobileScreen extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(5),
                       ),
                       child: TextFormField(
@@ -129,9 +243,9 @@ class _MobileScreen extends StatelessWidget {
                 )
               ],
             ),
-          ),
-        ),
-      ),
-    );
+          )
+        : Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }

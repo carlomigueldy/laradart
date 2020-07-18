@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../app/locator.dart';
@@ -8,6 +10,28 @@ class TabLayoutViewModel extends IndexTrackingViewModel {
   final _authService = locator<AuthenticationService>();
 
   User get user => _authService.user;
+  List<Map<String, dynamic>> get tabs => [
+        {
+          "title": "Dashboard",
+          "icon": Icon(CupertinoIcons.home),
+        },
+        {
+          "title": "Search",
+          "icon": Icon(CupertinoIcons.search),
+        },
+        {
+          "title": "Explore",
+          "icon": Icon(CupertinoIcons.location),
+        },
+        {
+          "title": "Settings",
+          "icon": CircleAvatar(
+            backgroundImage: _authService.user != null
+                ? NetworkImage(_authService.user.avatar)
+                : AssetImage('icons/icon-tile.png'),
+          )
+        },
+      ];
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
