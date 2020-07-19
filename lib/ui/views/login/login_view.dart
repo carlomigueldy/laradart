@@ -193,18 +193,27 @@ class LoginForm extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(5),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/icons/icon-tile.png',
-                  fit: BoxFit.contain,
-                  height: 100,
-                  width: 100,
-                ),
+                getValueForScreenType<bool>(context: context, mobile: false)
+                    ? Image.asset(
+                        'assets/icons/icon-tile.png',
+                        fit: BoxFit.contain,
+                        height: 100,
+                        width: 100,
+                      )
+                    : SizedBox.shrink(),
                 Text(
                   'Cool App Name',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 36,
+                    fontSize: getValueForScreenType<double>(
+                      context: context,
+                      desktop: 36,
+                      tablet: 36,
+                      mobile: 24,
+                    ),
                   ),
                 ),
                 Text(
@@ -212,7 +221,12 @@ class LoginForm extends StatelessWidget {
                   "I am using a stock photo don't worry.",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: getValueForScreenType<double>(
+                      context: context,
+                      desktop: 12,
+                      tablet: 12,
+                      mobile: 10,
+                    ),
                   ),
                 )
               ],
@@ -221,40 +235,25 @@ class LoginForm extends StatelessWidget {
           SizedBox(height: screenSize.height * 0.1),
           Column(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(5),
+              TextFormField(
+                controller: _form['email'],
+                autocorrect: false,
+                decoration: InputDecoration(
+                  labelText: 'Email',
                 ),
-                child: TextFormField(
-                  controller: _form['email'],
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    border: InputBorder.none,
-                  ),
-                  validator: (value) => value.isEmpty
-                      ? 'Please provide your email address.'
-                      : null,
-                ),
+                validator: (value) =>
+                    value.isEmpty ? 'Please provide your email address.' : null,
               ),
               SizedBox(height: 10),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(5),
+              TextFormField(
+                controller: _form['password'],
+                obscureText: true,
+                autocorrect: false,
+                decoration: InputDecoration(
+                  labelText: 'Password',
                 ),
-                child: TextFormField(
-                  controller: _form['password'],
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    border: InputBorder.none,
-                  ),
-                  validator: (value) =>
-                      value.isEmpty ? 'Please provide your password.' : null,
-                ),
+                validator: (value) =>
+                    value.isEmpty ? 'Please provide your password.' : null,
               ),
               SizedBox(height: 15),
               Container(

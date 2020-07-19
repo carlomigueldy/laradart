@@ -30,13 +30,13 @@ class LaraDartApp extends StatelessWidget {
   }
 }
 
-@singleton
 class LaraDartViewModel extends ReactiveViewModel {
   final _themeService = locator<ThemeService>();
 
   ThemeMode get themeMode => _themeService.theme;
-  ThemeData get themeData =>
-      _themeService.isDark ? _themeService.lightTheme : _themeService.darkTheme;
+  ThemeData get themeData => _themeService.isLight
+      ? _themeService.lightTheme
+      : _themeService.darkTheme;
 
   @override
   List<ReactiveServiceMixin> get reactiveServices => [_themeService];
