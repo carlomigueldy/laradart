@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laradart/services/authentication_service.dart';
 import 'package:laradart/styles/button_text_style_constants.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
@@ -8,13 +9,15 @@ import './login_viewmodel.dart';
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) {
         return ScreenTypeLayout(
-          mobile: _MobileScreen(model: model),
-          desktop: _DesktopScreen(model: model),
-          tablet: _TabletScreen(model: model),
+          mobile: _MobileScreen(model: model, formKey: _formKey),
+          desktop: _DesktopScreen(model: model, formKey: _formKey),
+          tablet: _TabletScreen(model: model, formKey: _formKey),
         );
       },
     );
@@ -23,9 +26,11 @@ class LoginView extends StatelessWidget {
 
 class _TabletScreen extends StatelessWidget {
   final LoginViewModel model;
+  final GlobalKey<FormState> formKey;
 
   _TabletScreen({
     this.model,
+    this.formKey,
   });
 
   @override
@@ -61,6 +66,7 @@ class _TabletScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: LoginForm(
                     model: model,
+                    formKey: formKey,
                   ),
                 ),
               ),
@@ -74,9 +80,11 @@ class _TabletScreen extends StatelessWidget {
 
 class _DesktopScreen extends StatelessWidget {
   final LoginViewModel model;
+  final GlobalKey<FormState> formKey;
 
   _DesktopScreen({
     this.model,
+    this.formKey,
   });
 
   @override
@@ -112,6 +120,7 @@ class _DesktopScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 45),
                   child: LoginForm(
                     model: model,
+                    formKey: formKey,
                   ),
                 ),
               ),
@@ -125,21 +134,30 @@ class _DesktopScreen extends StatelessWidget {
 
 class _MobileScreen extends StatelessWidget {
   final LoginViewModel model;
+  final GlobalKey<FormState> formKey;
 
   _MobileScreen({
     this.model,
+    this.formKey,
   });
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 30,
+        body: SingleChildScrollView(
+          child: Container(
+            height: screenSize.height,
+            padding: EdgeInsets.symmetric(
+              horizontal: 30,
+            ),
+            color: Colors.white,
+            child: LoginForm(
+              model: model,
+              formKey: formKey,
+            ),
           ),
-          color: Colors.white,
-          child: LoginForm(model: model),
         ),
       ),
     );
@@ -147,22 +165,27 @@ class _MobileScreen extends StatelessWidget {
 }
 
 class LoginForm extends StatelessWidget {
-  const LoginForm({
+  LoginForm({
     Key key,
+    GlobalKey<FormState> this.formKey,
     @required this.model,
   }) : super(key: key);
 
   final LoginViewModel model;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
-    final _form = GlobalKey<FormState>();
-    final _email = TextEditingController(text: 'admin@admin.com');
-    final _password = TextEditingController(text: 'password');
+    // final _email = TextEditingController(text: 'admin@admin.com');
+    // final _password = TextEditingController(text: 'password');
     final screenSize = MediaQuery.of(context).size;
+    final Map<String, dynamic> _form = {
+      "email": TextEditingController(),
+      "password": TextEditingController(),
+    };
 
     return Form(
-      key: _form,
+      key: formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -205,12 +228,14 @@ class LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: TextFormField(
-                  controller: _email,
-                  enabled: !model.isBusy,
+                  controller: _form['email'],
                   decoration: InputDecoration(
                     labelText: 'Email',
                     border: InputBorder.none,
                   ),
+                  validator: (value) => value.isEmpty
+                      ? 'Please provide your email address.'
+                      : null,
                 ),
               ),
               SizedBox(height: 10),
@@ -221,13 +246,14 @@ class LoginForm extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: TextFormField(
-                  controller: _password,
-                  enabled: !model.isBusy,
+                  controller: _form['password'],
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     border: InputBorder.none,
                   ),
+                  validator: (value) =>
+                      value.isEmpty ? 'Please provide your password.' : null,
                 ),
               ),
               SizedBox(height: 15),
@@ -244,8 +270,13 @@ class LoginForm extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   onPressed: () {
-                    if (!model.isBusy && _form.currentState.validate()) {
-                      model.login();
+                    if (!model.isBusy && formKey.currentState.validate()) {
+                      model.login(
+                        credentials: EmailCredential(
+                          email: _form['email'].text,
+                          password: _form['password'].text,
+                        ),
+                      );
                     }
                   },
                   child: !model.isBusy
