@@ -7,6 +7,8 @@ enum ButtonTextStyle {
   accent,
   error,
   success,
+  light,
+  dark,
 }
 
 /// Get the button text style based on [ButtonTextStyle] type given.
@@ -33,6 +35,16 @@ getButtonTextStyle({ButtonTextStyle style}) {
     case ButtonTextStyle.error:
       return TextStyle(
         color: getColor(type: ColorType.primary),
+        fontWeight: FontWeight.bold,
+      );
+    case ButtonTextStyle.light:
+      return TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.bold,
+      );
+    case ButtonTextStyle.dark:
+      return TextStyle(
+        color: Colors.white,
         fontWeight: FontWeight.bold,
       );
     case ButtonTextStyle.success:

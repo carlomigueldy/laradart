@@ -19,19 +19,19 @@ class TabLayoutViewModel extends ReactiveViewModel {
   List<Map<String, dynamic>> get tabs => [
         {
           "title": "Dashboard",
-          "icon": Icon(CupertinoIcons.home),
+          "icon": CupertinoIcons.home,
         },
         {
           "title": "Users",
-          "icon": Icon(CupertinoIcons.person),
+          "icon": CupertinoIcons.person,
         },
         {
           "title": "Search",
-          "icon": Icon(CupertinoIcons.search),
+          "icon": CupertinoIcons.search,
         },
         {
           "title": "Explore",
-          "icon": Icon(CupertinoIcons.location),
+          "icon": CupertinoIcons.location,
         },
         {
           "title": "Settings",

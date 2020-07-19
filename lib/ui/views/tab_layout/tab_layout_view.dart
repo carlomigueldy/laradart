@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laradart/styles/button_text_style_constants.dart';
 import 'package:laradart/styles/color_constants.dart';
 import 'package:laradart/ui/views/users/user_list_view.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -92,9 +93,8 @@ class _DesktopScreen extends StatelessWidget {
                                 splashColor: getColor(type: ColorType.accent),
                                 child: Text(
                                   'Sign Out',
-                                  style: TextStyle(
-                                    color: getColor(type: ColorType.primary),
-                                    fontWeight: FontWeight.bold,
+                                  style: getButtonTextStyle(
+                                    style: ButtonTextStyle.primary,
                                   ),
                                 ),
                                 onPressed: () => model.logout(),
@@ -171,6 +171,17 @@ class _DesktopScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
+                  leading: tab['title'] != "Settings"
+                      ? Icon(
+                          tab['icon'],
+                          color: model.currentIndex == index
+                              ? Colors.white
+                              : Colors.black,
+                        )
+                      : Icon(CupertinoIcons.gear,
+                          color: model.currentIndex == index
+                              ? Colors.white
+                              : Colors.black),
                   title: Text(
                     tab['title'],
                     style: TextStyle(
@@ -236,7 +247,9 @@ class _MobileScreen extends StatelessWidget {
           },
           items: model.tabs.map((item) {
             return BottomNavigationBarItem(
-              icon: item['icon'],
+              icon: item['title'] != "Settings"
+                  ? Icon(item['icon'])
+                  : item['icon'],
               title: SizedBox.shrink(),
             );
           }).toList(),

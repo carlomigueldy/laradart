@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laradart/styles/button_text_style_constants.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
@@ -167,9 +168,15 @@ class LoginForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5),
             child: Column(
               children: [
+                Image.asset(
+                  'assets/icons/icon-tile.png',
+                  fit: BoxFit.contain,
+                  height: 100,
+                  width: 100,
+                ),
                 Text(
                   'Cool App Name',
                   style: TextStyle(
@@ -244,9 +251,15 @@ class LoginForm extends StatelessWidget {
                   child: !model.isBusy
                       ? Text(
                           'LOGIN',
+                          style:
+                              getButtonTextStyle(style: ButtonTextStyle.dark),
                         )
                       : Center(
-                          child: CircularProgressIndicator(),
+                          child: Container(
+                            height: 25,
+                            width: 25,
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
                 ),
               ),
