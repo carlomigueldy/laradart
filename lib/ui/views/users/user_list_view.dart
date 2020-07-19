@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -30,15 +31,83 @@ class _UserListViewBody extends StatelessWidget {
     return ListView(
       children: [
         PageHeader(
-          title: 'Search',
+          title: 'Users',
         ),
-        Container(
-          height: 500,
-          margin: const EdgeInsets.symmetric(horizontal: 50),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/illustrations/png/search.png'),
+        Card(
+          margin: EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            child: DataTable(
+              sortAscending: true,
+              showCheckboxColumn: true,
+              sortColumnIndex: 0,
+              onSelectAll: (value) {
+                print(value);
+              },
+              columns: const [
+                DataColumn(
+                    label: Text('Name'), tooltip: 'The name of the user'),
+                DataColumn(label: Text('Email')),
+                DataColumn(label: Text('Role')),
+                DataColumn(label: Text('Actions')),
+              ],
+              rows: [
+                DataRow(
+                  onSelectChanged: (value) => print(value),
+                  cells: [
+                    DataCell(Text('Carlo Miguel Dy')),
+                    DataCell(Text('carlomigueldy@gmail.com')),
+                    DataCell(Text('super-admin')),
+                    DataCell(
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {},
+                            splashRadius: 20,
+                          )
+                        ],
+                      ),
+                      placeholder: true,
+                    ),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Carlo Miguel Dy')),
+                    DataCell(Text('carlomigueldy@gmail.com')),
+                    DataCell(Text('super-admin')),
+                    DataCell(
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {},
+                            splashRadius: 20,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Carlo Miguel Dy')),
+                    DataCell(Text('carlomigueldy@gmail.com')),
+                    DataCell(Text('super-admin')),
+                    DataCell(
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: Icon(CupertinoIcons.eye_solid),
+                            onPressed: () {},
+                            splashRadius: 20,
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         )
