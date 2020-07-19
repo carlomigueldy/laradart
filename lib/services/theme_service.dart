@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
+import 'package:laradart/styles/color_constants.dart';
 import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
@@ -67,22 +68,13 @@ class ThemeService with ReactiveServiceMixin {
   ThemeData get lightTheme {
     var fontFamily2 = GoogleFonts.poppins().fontFamily;
     return ThemeData(
-      primaryColor: Colors.indigo,
-      accentColor: Colors.indigo[100],
+      primaryColor: getColor(type: ColorType.primary),
+      accentColor: getColor(type: ColorType.accent),
       fontFamily: fontFamily2,
       brightness: Brightness.light,
       backgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         elevation: 0,
-        // centerTitle: true,
-        // color: Colors.white,
-        // textTheme: TextTheme(
-        //   headline6: TextStyle(
-        //     color: Colors.black,
-        //     fontSize: 16,
-        //     fontFamily: fontFamily2,
-        //   ),
-        // ),
       ),
       snackBarTheme: SnackBarThemeData(
         elevation: 10,
