@@ -1,6 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:laradart/styles/color_constants.dart';
+import 'package:laradart/ui/views/users/user_list_view.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
@@ -19,7 +21,7 @@ class TabLayoutView extends StatelessWidget {
         return ScreenTypeLayout(
           mobile: _MobileScreen(model: model),
           desktop: _DesktopScreen(model: model),
-          tablet: _TabletScreen(model: model),
+          // tablet: _TabletScreen(model: model),
         );
       },
     );
@@ -74,34 +76,52 @@ class _DesktopScreen extends StatelessWidget {
                   horizontal: 10,
                   vertical: 5,
                 ),
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => SizedBox(height: 5),
-                  itemCount: model.tabs.length,
-                  itemBuilder: (context, index) => Container(
-                    decoration: BoxDecoration(
-                      color: model.currentIndex == index
-                          ? Theme.of(context).primaryColor
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        model.tabs[index]['title'],
-                        style: TextStyle(
-                            fontWeight: model.currentIndex == index
-                                ? FontWeight.bold
-                                : FontWeight.normal,
-                            color: model.currentIndex == index
-                                ? Colors.white
-                                : Colors.black),
+                child: Stack(
+                  // alignment: Alignment.bottomCenter,
+                  children: [
+                    _sidebarItems(context: context),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        child: !model.isBusy
+                            ? FlatButton(
+                                splashColor: getColor(type: ColorType.accent),
+                                child: Text(
+                                  'Sign Out',
+                                  style: TextStyle(
+                                    color: getColor(type: ColorType.primary),
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                onPressed: () => model.logout(),
+                              )
+                            : Center(
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator()),
+                              ),
                       ),
-                      onTap: () => model.setIndex(index),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      // trailing: model.tabs[index]['icon'],
                     ),
-                  ),
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.brightness_high,
+                          color: getColor(type: ColorType.primary),
+                        ),
+                        onPressed: () {
+                          print('TOGGLED!');
+                          model.toggleTheme();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Flexible(
@@ -109,7 +129,7 @@ class _DesktopScreen extends StatelessWidget {
                   height: screenSize.height,
                   width: screenSize.width,
                   color: Colors.white,
-                  child: getViewForIndex(model.currentIndex),
+                  child: _pageTransitionSwitcher(model: model),
                 ),
               ),
             ],
@@ -117,6 +137,62 @@ class _DesktopScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  ListView _sidebarItems({BuildContext context}) {
+    return ListView(children: [
+      Center(
+        child: Container(
+          height: 150,
+          width: 150,
+          margin: EdgeInsets.symmetric(vertical: 15),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: model.user != null
+                  ? NetworkImage(model.user.avatar ?? "")
+                  : AssetImage('icons/icon-tile.png'),
+            ),
+          ),
+        ),
+      ),
+      ...model.tabs
+          .asMap()
+          .map(
+            (index, tab) => MapEntry(
+              index,
+              Container(
+                decoration: BoxDecoration(
+                  color: model.currentIndex == index
+                      ? getColor(type: ColorType.primary)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: ListTile(
+                  title: Text(
+                    tab['title'],
+                    style: TextStyle(
+                        fontWeight: model.currentIndex == index
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                        color: model.currentIndex == index
+                            ? Colors.white
+                            : Colors.black),
+                  ),
+                  onTap: () => model.setIndex(index),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  // trailing: tab['icon'],
+                ),
+              ),
+            ),
+          )
+          .values
+          .toList(),
+    ]);
   }
 }
 
@@ -141,6 +217,7 @@ class _MobileScreen extends StatelessWidget {
           controller: _pageController,
           children: [
             HomeView(),
+            UserListView(),
             SearchView(),
             ExploreView(),
             SettingsView(),
@@ -167,26 +244,25 @@ class _MobileScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  PageTransitionSwitcher _pageTransitionSwitcher(TabLayoutViewModel model) {
-    return PageTransitionSwitcher(
-      duration: const Duration(milliseconds: 300),
-      reverse: model.reverse,
-      transitionBuilder: (
-        Widget child,
-        Animation<double> animation,
-        Animation<double> secondaryAnimation,
-      ) {
-        return SharedAxisTransition(
-          child: child,
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.horizontal,
-        );
-      },
-      child: getViewForIndex(model.currentIndex),
-    );
-  }
+PageTransitionSwitcher _pageTransitionSwitcher({TabLayoutViewModel model}) {
+  return PageTransitionSwitcher(
+    duration: const Duration(milliseconds: 500),
+    transitionBuilder: (
+      Widget child,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+    ) {
+      return SharedAxisTransition(
+        child: child,
+        animation: animation,
+        secondaryAnimation: secondaryAnimation,
+        transitionType: SharedAxisTransitionType.vertical,
+      );
+    },
+    child: getViewForIndex(model.currentIndex),
+  );
 }
 
 Widget getViewForIndex(index) {
@@ -194,10 +270,12 @@ Widget getViewForIndex(index) {
     case 0:
       return HomeView();
     case 1:
-      return SearchView();
+      return UserListView();
     case 2:
-      return ExploreView();
+      return SearchView();
     case 3:
+      return ExploreView();
+    case 4:
       return SettingsView();
     default:
       return HomeView();
