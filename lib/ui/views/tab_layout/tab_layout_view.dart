@@ -1,12 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laradart/styles/button_text_style_constants.dart';
-import 'package:laradart/styles/color_constants.dart';
-import 'package:laradart/ui/views/users/user_list_view.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../styles/button_text_style_constants.dart';
+import '../../../styles/color_constants.dart';
+import '../users/user_list_view.dart';
 import './tab_layout_viewmodel.dart';
 import './tabs/explore/explore_view.dart';
 import './tabs/home/home_view.dart';
