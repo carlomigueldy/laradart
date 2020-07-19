@@ -57,7 +57,7 @@ class _TabletScreen extends StatelessWidget {
                 height: screenSize.height,
                 width: screenSize.width * 0.6,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: LoginForm(
                     model: model,
                   ),
@@ -108,7 +108,7 @@ class _DesktopScreen extends StatelessWidget {
                 height: screenSize.height,
                 width: screenSize.width * 0.4,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  padding: EdgeInsets.symmetric(horizontal: 45),
                   child: LoginForm(
                     model: model,
                   ),
@@ -135,7 +135,7 @@ class _MobileScreen extends StatelessWidget {
         resizeToAvoidBottomPadding: false,
         body: Container(
           padding: EdgeInsets.symmetric(
-            horizontal: 75,
+            horizontal: 30,
           ),
           color: Colors.white,
           child: LoginForm(model: model),
@@ -160,92 +160,101 @@ class LoginForm extends StatelessWidget {
     final _password = TextEditingController(text: 'password');
     final screenSize = MediaQuery.of(context).size;
 
-    return !model.isBusy
-        ? Form(
-            key: _form,
+    return Form(
+      key: _form,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Cool App Name',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 36,
-                        ),
-                      ),
-                      Text(
-                        "Lorem ipsum the app name is so cool I don't event care. "
-                        "I am using a stock photo don't worry.",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      )
-                    ],
+                Text(
+                  'Cool App Name',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
                   ),
                 ),
-                SizedBox(height: screenSize.height * 0.1),
-                Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: TextFormField(
-                        controller: _email,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: TextFormField(
-                        controller: _password,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 15),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        onPressed: () {
-                          if (_form.currentState.validate()) {
-                            model.login();
-                          }
-                        },
-                        child: Text('LOGIN'),
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                  ],
+                Text(
+                  "Lorem ipsum the app name is so cool I don't event care. "
+                  "I am using a stock photo don't worry.",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 )
               ],
             ),
+          ),
+          SizedBox(height: screenSize.height * 0.1),
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextFormField(
+                  controller: _email,
+                  enabled: !model.isBusy,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextFormField(
+                  controller: _password,
+                  enabled: !model.isBusy,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Container(
+                width: getValueForScreenType<double>(
+                  context: context,
+                  mobile: 250,
+                  desktop: 250,
+                  tablet: 225,
+                ),
+                height: 50,
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  onPressed: () {
+                    if (!model.isBusy && _form.currentState.validate()) {
+                      model.login();
+                    }
+                  },
+                  child: !model.isBusy
+                      ? Text(
+                          'LOGIN',
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
           )
-        : Center(
-            child: CircularProgressIndicator(),
-          );
+        ],
+      ),
+    );
   }
 }
