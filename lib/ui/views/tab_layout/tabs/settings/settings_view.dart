@@ -139,7 +139,6 @@ class _UserAvatar extends StatelessWidget {
     return Container(
       height: 300,
       width: 300,
-      margin: EdgeInsets.symmetric(horizontal: 50),
       decoration: BoxDecoration(
         color: Colors.blue,
         shape: BoxShape.circle,
