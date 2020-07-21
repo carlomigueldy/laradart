@@ -221,8 +221,7 @@ class AuthenticationService with ReactiveServiceMixin {
         break;
       case 422:
         _alertService.showSnackbar(
-          message:
-              "Your credentials are wrong. Please try again using the correct credentials.",
+          message: "The data you have provided is invalid.",
           type: SnackBarType.ERROR,
         );
         break;
@@ -248,7 +247,7 @@ class AuthenticationService with ReactiveServiceMixin {
         break;
       default:
         _alertService.showSnackbar(
-          message: "An error has occurred anonymously.",
+          message: "An anonymous error has occurred.",
           type: SnackBarType.ERROR,
         );
     }
