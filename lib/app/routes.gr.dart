@@ -11,8 +11,9 @@ import 'package:laradart/ui/views/splash/splash_view.dart';
 import 'package:laradart/ui/views/login/login_view.dart';
 import 'package:laradart/ui/views/tab_layout/tab_layout_view.dart';
 import 'package:laradart/ui/views/timezones/timezones_list_view.dart';
-import 'package:laradart/ui/views/users/user_list_view.dart';
-import 'package:laradart/ui/views/users/user_detail/user_detail_view.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/users/user_list_view.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/users/user_detail/user_detail_view.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/users/create/user_create_view.dart';
 
 class Routes {
   static const String splashView = '/';
@@ -20,8 +21,9 @@ class Routes {
   static const String tabLayoutView = '/home';
   static const String timezoneListView = '/timezones';
   static const String userListView = '/users';
-  static const String _userDetailView = '/users/:id';
-  static userDetailView({@required id}) => '/users/$id';
+  static const String _userDetailView = '/users/:id/detail';
+  static userDetailView({@required id}) => '/users/$id/detail';
+  static const String userCreateView = '/users/create';
   static const all = <String>{
     splashView,
     loginView,
@@ -29,6 +31,7 @@ class Routes {
     timezoneListView,
     userListView,
     _userDetailView,
+    userCreateView,
   };
 }
 
@@ -42,6 +45,7 @@ class Router extends RouterBase {
     RouteDef(Routes.timezoneListView, page: TimezoneListView),
     RouteDef(Routes.userListView, page: UserListView),
     RouteDef(Routes._userDetailView, page: UserDetailView),
+    RouteDef(Routes.userCreateView, page: UserCreateView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -79,6 +83,12 @@ class Router extends RouterBase {
     UserDetailView: (RouteData data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => UserDetailView(),
+        settings: data,
+      );
+    },
+    UserCreateView: (RouteData data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserCreateView(),
         settings: data,
       );
     },

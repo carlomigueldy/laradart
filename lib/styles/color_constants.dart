@@ -6,6 +6,8 @@ enum ColorType {
   accent,
   error,
   success,
+  light,
+  dark,
 }
 
 /// Get the color based on type.
@@ -24,6 +26,10 @@ getColor({ColorType type}) {
       return Colors.red;
     case ColorType.success:
       return Colors.green;
+    case ColorType.dark:
+      return Colors.white;
+    case ColorType.light:
+      return Colors.black;
     default:
       return Colors.indigo;
   }

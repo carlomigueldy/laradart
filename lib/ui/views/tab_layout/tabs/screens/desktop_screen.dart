@@ -1,9 +1,10 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:laradart/styles/button_text_style_constants.dart';
-import 'package:laradart/styles/color_constants.dart';
-import 'package:laradart/ui/views/tab_layout/tab_layout_viewmodel.dart';
+
+import '../../../../../styles/button_text_style_constants.dart';
+import '../../../../../styles/color_constants.dart';
+import '../../tab_layout_viewmodel.dart';
 
 class DesktopScreen extends StatelessWidget {
   final TabLayoutViewModel model;
@@ -18,14 +19,6 @@ class DesktopScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.indigo,
-          child: Icon(
-            Icons.home,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-        ),
         body: Container(
           height: screenSize.height,
           child: Row(

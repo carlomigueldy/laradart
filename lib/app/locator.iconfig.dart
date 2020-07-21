@@ -14,7 +14,7 @@ import 'package:laradart/ui/views/tab_layout/tabs/search/search_viewmodel.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/settings/settings_viewmodel.dart';
 import 'package:laradart/services/theme_service.dart';
 import 'package:laradart/ui/views/timezones/timezones_list_viewmodel.dart';
-import 'package:laradart/ui/views/users/user_list_viewmodel.dart';
+import 'package:laradart/ui/views/tab_layout/tabs/users/user_list_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {

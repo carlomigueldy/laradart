@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../../datamodels/user.dart';
-import '../../../../services/authentication_service.dart';
-import '../../../../app/config.dart';
-import '../../../../app/locator.dart';
-import '../../../../services/alert_service.dart';
+import '../../../../../../app/config.dart';
+import '../../../../../../app/locator.dart';
+import '../../../../../../datamodels/user.dart';
+import '../../../../../../services/alert_service.dart';
+import '../../../../../../services/authentication_service.dart';
 
 class UserDetailViewModel extends FutureViewModel<User> {
   final _alertService = locator<AlertService>();
