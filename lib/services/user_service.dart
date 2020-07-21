@@ -29,6 +29,7 @@ class UserService with ReactiveServiceMixin {
   User get user => _user.value;
 
   static String message = "";
+  static const String endpoint = "/api/users";
 
   /// Fetch all users from API.
   ///
@@ -36,7 +37,7 @@ class UserService with ReactiveServiceMixin {
   Future fetchAll() async {
     try {
       Response response = await dio.get(
-        '/api/users',
+        '$endpoint',
         options: _authService.authorizationHeader(),
       );
 
@@ -62,12 +63,13 @@ class UserService with ReactiveServiceMixin {
   Future fetch({int userId}) async {
     try {
       Response response = await dio.get(
-        '/api/users/$userId',
+        '$endpoint/$userId',
         options: _authService.authorizationHeader(),
       );
 
       User user = User.fromJson(response.data['data']);
       _user.value = user;
+      return user;
     } on DioError catch (e) {
       _authService.handleError(e);
     }
@@ -80,12 +82,10 @@ class UserService with ReactiveServiceMixin {
   Future requestCreate({User form}) async {
     try {
       Response response = await dio.post(
-        '/api/users',
+        '$endpoint',
         options: _authService.authorizationHeader(),
         data: form.toJson(),
       );
-
-      print(response.data);
 
       message = response.data['message'];
       _alertService.showSnackbar(
@@ -94,7 +94,48 @@ class UserService with ReactiveServiceMixin {
       );
     } on DioError catch (e) {
       _authService.handleError(e);
-      // print(e);
+    }
+  }
+
+  /// Request update existing resource in API.
+  ///
+  /// @param [User] user
+  /// @return void
+  Future requestUpdate({User form, int userId}) async {
+    try {
+      Response response = await dio.put(
+        '$endpoint/$userId',
+        options: _authService.authorizationHeader(),
+        data: form.toJson(),
+      );
+
+      message = response.data['message'];
+      _alertService.showSnackbar(
+        message: message,
+        type: SnackBarType.INFO,
+      );
+    } on DioError catch (e) {
+      _authService.handleError(e);
+    }
+  }
+
+  /// Request to delete a user from API.
+  ///
+  /// @return void
+  Future requestDelete({int userId}) async {
+    try {
+      Response response = await dio.delete(
+        '$endpoint/$userId',
+        options: _authService.authorizationHeader(),
+      );
+
+      message = response.data['message'];
+      _alertService.showSnackbar(
+        message: message,
+        type: SnackBarType.INFO,
+      );
+    } on DioError catch (e) {
+      _authService.handleError(e);
     }
   }
 }
