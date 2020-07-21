@@ -180,8 +180,8 @@ class LoginForm extends StatelessWidget {
     // final _password = TextEditingController(text: 'password');
     final screenSize = MediaQuery.of(context).size;
     final Map<String, dynamic> _form = {
-      "email": TextEditingController(),
-      "password": TextEditingController(),
+      "email": TextEditingController(text: 'admin@admin.com'),
+      "password": TextEditingController(text: 'password'),
     };
 
     return Form(
