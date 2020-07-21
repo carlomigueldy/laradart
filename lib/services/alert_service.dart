@@ -28,6 +28,7 @@ class AlertService {
     _snackbarService.showCustomSnackBar(
       message: message,
       icon: getIconByType(type),
+
       // backgroundColor: Colors.white,
       // messageText: Text(
       //   message,
@@ -42,9 +43,9 @@ class AlertService {
       ),
       shouldIconPulse: false,
       snackStyle: SnackStyle.FLOATING,
-      snackPosition: SnackPosition.TOP,
+      snackPosition: SnackPosition.BOTTOM,
       // dismissDirection: SnackDismissDirection.HORIZONTAL,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       isDismissible: true,
     );
   }
