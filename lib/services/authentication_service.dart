@@ -161,9 +161,14 @@ class AuthenticationService with ReactiveServiceMixin {
   /// Use the authorization header with Bearer token.
   ///
   /// @return [Options]
-  Options authorizationHeader() {
+  Options authorizationHeader({bool followRedirects = false}) {
     return Options(
-      headers: {"Authorization": "Bearer ${_token.value}"},
+      headers: {
+        "Authorization": "Bearer ${_token.value}",
+        "accept": "application/json",
+      },
+      followRedirects: false,
+      // validateStatus: (status) => status < 500,
     );
   }
 
@@ -195,7 +200,17 @@ class AuthenticationService with ReactiveServiceMixin {
     print(
         '[Auth Service Error] ${error.response.statusCode} ${error.response.statusMessage}');
 
+    if (error.response == null) {
+      print('[Auth Service Error] no response found');
+    }
+
     switch (error.response.statusCode) {
+      case 302:
+        _alertService.showSnackbar(
+          message: "Some error occurred, sorry but we're trying to fix it!",
+          type: SnackBarType.ERROR,
+        );
+        break;
       case 403:
         _alertService.showSnackbar(
           message:
