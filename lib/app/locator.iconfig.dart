@@ -15,6 +15,7 @@ import 'package:laradart/ui/views/tab_layout/tabs/settings/settings_viewmodel.da
 import 'package:laradart/services/theme_service.dart';
 import 'package:laradart/ui/views/timezones/timezones_list_viewmodel.dart';
 import 'package:laradart/ui/views/tab_layout/tabs/users/user_list_viewmodel.dart';
+import 'package:laradart/services/user_service.dart';
 import 'package:get_it/get_it.dart';
 
 void $initGetIt(GetIt g, {String environment}) {
@@ -28,6 +29,7 @@ void $initGetIt(GetIt g, {String environment}) {
   g.registerLazySingleton<SnackbarService>(
       () => thirdPartyServicesModule.snackbarService);
   g.registerLazySingleton<ThemeService>(() => ThemeService());
+  g.registerLazySingleton<UserService>(() => UserService());
 
   //Eager singletons must be registered in the right order
   g.registerSingleton<ExploreViewModel>(ExploreViewModel());

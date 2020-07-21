@@ -17,12 +17,13 @@ class User {
   final String lastName;
   final String fullName;
   final String email;
+  final String phoneNumber;
   final String timeZone;
   final String password;
   final String passwordConfirmation;
 
   User({
-    @required this.id,
+    this.id,
     this.avatar = "",
     this.username = "",
     this.role = "",
@@ -31,6 +32,7 @@ class User {
     this.lastName = "",
     this.fullName = "",
     this.email = "",
+    this.phoneNumber = "",
     this.timeZone = "",
     this.password = "",
     this.passwordConfirmation = "",
