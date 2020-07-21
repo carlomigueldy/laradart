@@ -8,7 +8,6 @@ import '../../../../../datamodels/user.dart';
 import '../../../../../styles/button_text_style_constants.dart';
 import '../../../../../styles/color_constants.dart';
 import '../../../../widgets/page_header.dart';
-import '../../../../../app/routes.gr.dart';
 
 class UserListView extends StatelessWidget {
   @override
@@ -33,19 +32,17 @@ class _UserListViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.grey[100],
         label: Row(
           children: [
             Icon(
               Icons.add,
-              color: getColor(type: ColorType.dark),
+              color: getColor(type: ColorType.primary),
             ),
-            SizedBox(
-              width: 10,
-            ),
+            SizedBox(width: 10),
             Text(
               'New User',
-              style: getButtonTextStyle(style: ButtonTextStyle.dark),
+              style: getButtonTextStyle(style: ButtonTextStyle.primary),
             ),
           ],
         ),

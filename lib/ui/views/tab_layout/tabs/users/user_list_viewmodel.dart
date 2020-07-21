@@ -8,10 +8,12 @@ import '../../../../../app/locator.dart';
 import '../../../../../app/routes.gr.dart';
 import '../../../../../datamodels/user.dart';
 import '../../../../../services/authentication_service.dart';
+import '../../../../../services/user_service.dart';
 
 @singleton
 class UserListViewModel extends FutureViewModel<List<User>> {
   final _authService = locator<AuthenticationService>();
+  final _userService = locator<UserService>();
   final _navigationService = locator<NavigationService>();
 
   @override
@@ -19,18 +21,8 @@ class UserListViewModel extends FutureViewModel<List<User>> {
     try {
       print('[UserListViewModel] futureToRun');
       setBusy(true);
-      Response response = await dio.get(
-        '/api/users',
-        options: _authService.authorizationHeader(),
-      );
+      List<User> users = await _userService.fetchAll();
       setBusy(false);
-
-      List<User> users = [];
-
-      for (var item in response.data['data']) {
-        users.add(User.fromJson(item));
-      }
-
       return users;
     } on DioError catch (error) {
       _authService.handleError(error);
